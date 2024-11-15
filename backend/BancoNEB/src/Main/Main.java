@@ -41,7 +41,11 @@ public class Main {
             case 1:
                 ControllerLoginCliente controllerLoginCliente = new ControllerLoginCliente();  
                 
-                controllerLoginCliente.loginEntrada();
+                boolean vericEntrada = controllerLoginCliente.loginEntrada();
+                
+                if(vericEntrada){
+                    System.out.println("Funcionou");
+                }
                 
                 break;
             case 2:
