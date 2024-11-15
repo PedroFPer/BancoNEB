@@ -6,6 +6,10 @@ import ControllerMenu.ControllerMenInicClient;
 import ControllerMenu.ControllerMenTelClien;
 import ControllerMenu.ControllerMenTipUsua;
 import ControllerMenu.ControllerMenuCreditoInicial;
+import ControllerRelatorio.ControllerRelatClien;
+import DOT.ExtratoDot;
+import DOT.FuncionarioDot;
+import java.util.ArrayList;
 
 import java.util.Scanner;
 
@@ -65,13 +69,13 @@ public class Main {
     private static void menuInicClie(Integer idCliente) {
         Scanner scanner = new Scanner(System.in);
         ControlMovFinacClient controlMovFinacClient = new ControlMovFinacClient();
-        
+
         do {
 
             ControllerMenTelClien controllerMenTelClien = new ControllerMenTelClien();
 
             int escolhaMenuInicClie = controllerMenTelClien.escolherOpcao();
-            
+
             switch (escolhaMenuInicClie) {
                 case 1:
 
@@ -87,7 +91,23 @@ public class Main {
                     break;
 
                 case 2:
-                    //Extrato
+                    ControllerRelatClien controllerRelatClien = new ControllerRelatClien();
+                    ArrayList<ExtratoDot> listaDeExtrato = controllerRelatClien.controlExtratoClien(idCliente);
+
+                    for (ExtratoDot extrato : listaDeExtrato) {
+
+                        System.out.println("Nome do Pagador: " + extrato.getNomePagador());
+                        System.out.println("Valor da Transação: " + extrato.getValorTrasancao());
+                        System.out.println("Tipo de Pagamento: " + extrato.getTipoPagamento());
+                        System.out.println("Número da Parcela Atual: " + extrato.getNumParcelaAtual());
+                        System.out.println("Número Total de Parcelas: " + extrato.getNumParcelaTotal());
+                        System.out.println("Nome do Beneficiário: " + extrato.getNomeBeneficiario());
+                        System.out.println("Data da Transação: " + extrato.getData_transacao());
+                        System.out.println("Hora da Transação: " + extrato.getHora_transacao());
+                        System.out.println("-----------------------------------");
+                    }
+                    
+                    scanner.nextLine();
                     break;
 
                 case 3:
