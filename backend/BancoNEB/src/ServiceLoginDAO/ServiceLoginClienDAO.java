@@ -6,14 +6,14 @@ import DAO.LoginClienteDAO;
 
 public class ServiceLoginClienDAO {
 
-    public boolean resqLoginCliDAO(String cpf, String senhaEntrada) {
+    public Integer serviceResqLoginCli(String cpf, String senhaEntrada) {
         LoginClienteDAO loginClienDao = new LoginClienteDAO();
 
-        boolean vericEntrada = loginClienDao.reqLoginClieDAO(cpf,senhaEntrada);
-        if (vericEntrada) {
-            return true;
+        Integer idClienteServ = loginClienDao.reqLoginClieDAO(cpf,senhaEntrada);
+        if (idClienteServ != null) {
+            return idClienteServ;
         } else {
-            return false;
+            return null;
         }
 
     }

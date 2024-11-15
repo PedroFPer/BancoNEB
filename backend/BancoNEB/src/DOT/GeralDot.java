@@ -1,32 +1,34 @@
 
 package DOT;
 
+import java.time.LocalDate;
+
 public class GeralDot {
     protected String nome;
     protected String cpf;
     protected String telefone;
     protected String logradoro;
-    protected String num;
     protected String bairro;
     protected String cidade;
     protected String estado;
     protected String pais;
     protected String email;
     protected String senhaEntrada;
-    protected int datanascimento;
+    protected String referencia;
+    protected LocalDate datanascimento;
 
-    public GeralDot(String nome, String cpf, String telefone, String logradoro, String num, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, int datanascimento) {
+    public GeralDot(String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada,String referencia, LocalDate datanascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.logradoro = logradoro;
-        this.num = num;
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
         this.pais = pais;
         this.email = email;
         this.senhaEntrada = senhaEntrada;
+        this.referencia = referencia;
         this.datanascimento = datanascimento;
     }
     
@@ -58,14 +60,6 @@ public class GeralDot {
 
     public void setLogradoro(String logradoro) {
         this.logradoro = logradoro;
-    }
-
-    public String getNum() {
-        return num;
-    }
-
-    public void setNum(String num) {
-        this.num = num;
     }
 
     public String getBairro() {
@@ -117,7 +111,7 @@ public class GeralDot {
         this.senhaEntrada = senhaEntrada;
     }
 
-    public int getDatanascimento() {
+    public LocalDate getDatanascimento() {
         return datanascimento;
     }
     

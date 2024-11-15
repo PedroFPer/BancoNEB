@@ -12,7 +12,7 @@ public class ControllerLoginCliente {
     UtilVericCpf vericCpf = new UtilVericCpf();
     UtilVericSenha vericSenha = new UtilVericSenha();
 
-    public boolean loginEntrada() {
+    public Integer loginEntrada() {
         boolean vericQuantCpf;
         boolean vericQuantSenha;
         String cpf;
@@ -49,12 +49,12 @@ public class ControllerLoginCliente {
 
             ServiceLoginClienDAO serviceLoginClienDao = new ServiceLoginClienDAO();
 
-            boolean vericEntradaDao = serviceLoginClienDao.resqLoginCliDAO(cpf, senha);
+            Integer idClienteControl = serviceLoginClienDao.serviceResqLoginCli(cpf, senha);
 
-            if (vericEntradaDao) {
-                return true;
+            if (idClienteControl != null) {
+                return idClienteControl;
             } else {
-                return false;
+                return null;
             }
 
         } while (true);

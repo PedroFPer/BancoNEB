@@ -7,28 +7,27 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 
-public class LoginClienteDAO {
+public class VericSaldoDAO {
 
-    public Integer reqLoginClieDAO(String cpf, String senhaEntrada) {
+    public Double vericSaldoAtualDAO(int idClienteDAO) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        int idClienteDAO;
+        double saldoAtualDAO;
 
-        String sql = "SELECT id_cliente_pf FROM cliente_pf WHERE cpf = ? AND senha_de_entrada=?";
+        String sql = "SELECT saldo FROM cliente_pf WHERE id_cliente_pf = ?";
 
         ConexaoDAO conexaoDao = new ConexaoDAO();
         conn = conexaoDao.conectaBD();
 
         try {
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, cpf);
-            pstm.setString(2, senhaEntrada);
+            pstm.setInt(1, idClienteDAO);
             rs = pstm.executeQuery();
 
             if (rs != null && rs.next()) {
-                idClienteDAO = (rs.getInt("id_cliente_pf"));
-                return idClienteDAO;
+                saldoAtualDAO = (rs.getDouble("saldo"));
+                return saldoAtualDAO;
             }
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro);
@@ -49,5 +48,4 @@ public class LoginClienteDAO {
         }
         return null;
     }
-
 }
