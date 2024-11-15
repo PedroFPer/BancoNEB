@@ -2,10 +2,10 @@ package ControllerLogin;
 
 import UtilVerifString.UtilVericCpf;
 import UtilVerifString.UtilVericSenha;
-import ServiceLoginDAO.ServiceLoginClienDAO;
+import ServiceLoginDAO.ServiceLoginDAO;
 import java.util.Scanner;
 
-public class ControllerLoginCliente {
+public class ControllerLogin {
 
     Scanner scanner = new Scanner(System.in);
 
@@ -47,9 +47,9 @@ public class ControllerLoginCliente {
 
             } while (true);
 
-            ServiceLoginClienDAO serviceLoginClienDao = new ServiceLoginClienDAO();
+            ServiceLoginDAO serviceLoginDAO = new ServiceLoginDAO();
 
-            Integer idClienteControl = serviceLoginClienDao.serviceResqLoginCli(cpf, senha);
+            Integer idClienteControl = serviceLoginDAO.serviceResqLoginCli(cpf, senha);
 
             if (idClienteControl != null) {
                 return idClienteControl;

@@ -1,12 +1,12 @@
 package Main;
 
-import ControllerLogin.ControllerLoginCliente;
+import ControlMovFinacClient.ControlMovFinacClient;
+import ControllerLogin.ControllerLogin;
 import ControllerMenu.ControllerMenInicClient;
 import ControllerMenu.ControllerMenTelClien;
 import ControllerMenu.ControllerMenTipUsua;
 import ControllerMenu.ControllerMenuCreditoInicial;
-import ControllerSaldoClient.ControllerVericCredito;
-import ControllerSaldoClient.ControllerVericSaldo;
+
 import java.util.Scanner;
 
 public class Main {
@@ -42,7 +42,7 @@ public class Main {
 
         switch (opcaoTipClie) {
             case 1:
-                ControllerLoginCliente controllerLoginCliente = new ControllerLoginCliente();
+                ControllerLogin controllerLoginCliente = new ControllerLogin();
 
                 Integer idCliente = controllerLoginCliente.loginEntrada();
 
@@ -64,7 +64,8 @@ public class Main {
 
     private static void menuInicClie(Integer idCliente) {
         Scanner scanner = new Scanner(System.in);
-
+        ControlMovFinacClient controlMovFinacClient = new ControlMovFinacClient();
+        
         do {
 
             ControllerMenTelClien controllerMenTelClien = new ControllerMenTelClien();
@@ -74,8 +75,7 @@ public class Main {
             switch (escolhaMenuInicClie) {
                 case 1:
 
-                    ControllerVericSaldo controllerVericSaldo = new ControllerVericSaldo();
-                    Double saldoAtual = controllerVericSaldo.controllerVericSaldoAtual(idCliente);
+                    Double saldoAtual = controlMovFinacClient.controllerVericSaldoAtual(idCliente);
 
                     if (saldoAtual != null) {
                         System.out.println("Saldo: " + saldoAtual);
@@ -103,8 +103,7 @@ public class Main {
 
                         switch (escolhaMenuInicCredit) {
                             case 1:
-                                ControllerVericCredito controllerVericCredito = new ControllerVericCredito();
-                                double veriCreditoDisponivel = controllerVericCredito.VericCreditoAtual(idCliente);
+                                double veriCreditoDisponivel = controlMovFinacClient.VericCreditoAtual(idCliente);
 
                                 System.out.println("Crédito Disponivel: " + veriCreditoDisponivel);
                                 break;
@@ -127,7 +126,8 @@ public class Main {
                     break;
 
                 case 0:
-
+                    System.out.println("Até mais!");
+                    System.exit(0);
                     break;
             }
         } while (true);

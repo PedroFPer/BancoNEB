@@ -4,7 +4,7 @@ import DAO.LoginClienteDAO;
 
 
 
-public class ServiceLoginClienDAO {
+public class ServiceLoginDAO {
 
     public Integer serviceResqLoginCli(String cpf, String senhaEntrada) {
         LoginClienteDAO loginClienDao = new LoginClienteDAO();
