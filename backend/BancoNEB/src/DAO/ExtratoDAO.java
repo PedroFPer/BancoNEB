@@ -28,7 +28,7 @@ public class ExtratoDAO {
             pstm.setInt(1, idClienteDAO);
             rs = pstm.executeQuery();
 
-            while (rs.next()) { // Chama rs.next() aqui
+            while (rs.next()) { 
                 int idCliente = rs.getInt("id_pagador");
                 String nomePagador = rs.getString("nome_pagador");
                 double valorTrasancao = rs.getDouble("valor_transacao");
@@ -52,7 +52,7 @@ public class ExtratoDAO {
                 listaExtrato.add(extratoDot);
             }
 
-            if (listaExtrato.isEmpty()) { // Caso nenhum dado seja encontrado
+            if (listaExtrato.isEmpty()) { 
                 System.out.println("Nenhum dado encontrado para o id_pagador: " + idClienteDAO);
             }
 
