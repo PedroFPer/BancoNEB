@@ -1,8 +1,9 @@
 package ControllerLogin;
 
+import ServiceVericCreden.ServiceVericCreden;
 import UtilVerifString.UtilVericCpf;
 import UtilVerifString.UtilVericSenha;
-import ServiceLoginDAO.ServiceLoginDAO;
+
 import java.util.Scanner;
 
 public class ControllerLogin {
@@ -47,9 +48,9 @@ public class ControllerLogin {
 
             } while (true);
 
-            ServiceLoginDAO serviceLoginDAO = new ServiceLoginDAO();
+            ServiceVericCreden serviceVericCreden = new ServiceVericCreden();
 
-            Integer idClienteControl = serviceLoginDAO.serviceResqLoginCli(cpf, senha);
+            Integer idClienteControl = serviceVericCreden.serviceResqLoginCli(cpf, senha);
 
             if (idClienteControl != null) {
                 return idClienteControl;

@@ -1,3 +1,4 @@
+
 package DAO;
 
 import DOT.ConexaoDAO;
@@ -10,8 +11,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class ExtratoDAO {
 
+public class RelatorioDAO {
     public ArrayList listaExtratoDAO(int idClienteDAO) {
         Connection conn = null;
         PreparedStatement pstm = null;

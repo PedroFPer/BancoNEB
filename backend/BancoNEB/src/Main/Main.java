@@ -1,10 +1,12 @@
 package Main;
 
 import ControlMovFinacClient.ControlMovFinacClient;
+import ControllerAlterInfor.ControllerAlterInfor;
 import ControllerLogin.ControllerLogin;
 import ControllerMenu.ControllerMenInicClient;
 import ControllerMenu.ControllerMenTelClien;
 import ControllerMenu.ControllerMenTipUsua;
+import ControllerMenu.ControllerMenuAlterClie;
 import ControllerMenu.ControllerMenuCreditoInicial;
 import ControllerRelatorio.ControllerRelatClien;
 import DOT.ExtratoDot;
@@ -142,7 +144,31 @@ public class Main {
                     break;
 
                 case 6:
-                    //alterar informaçoes
+                    ControllerAlterInfor controllerAlterInfor = new ControllerAlterInfor();
+                    ControllerMenuAlterClie controllerMenuAlterClie = new ControllerMenuAlterClie();
+                    int escolhaAlterClie = controllerMenuAlterClie.escolherOpcao();
+                    
+                    switch(escolhaAlterClie){
+                        case 1:
+                            controllerAlterInfor.ControllerAlterInfor(idCliente, escolhaAlterClie);
+                            break;
+                            
+                        case 2:
+                            //return 2
+                            break;
+                            
+                        case 3:
+                            //return 3
+                            break;
+                            
+                        case 4:
+                            //return 4
+                            break;
+                            
+                        case 0:
+                            
+                            break;
+                    }
                     break;
 
                 case 0:

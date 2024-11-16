@@ -3,32 +3,30 @@ package DAO;
 import DOT.ConexaoDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
-public class LoginClienteDAO {
+public class AlterInforClieDAO {
 
-    public Integer reqLoginClieDAO(String cpf, String senhaEntrada) {
+    public boolean altNomeClieDAO(int idClienteDAO, String novoNome) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        int idClienteDAO;
 
-        String sql = "SELECT id_cliente_pf FROM cliente_pf WHERE cpf = ? AND senha_de_entrada=?";
+        String sql = "UPDATE cliente_pf SET nome_cliente_pf = ? WHERE id_cliente_pf = ?";
 
         ConexaoDAO conexaoDao = new ConexaoDAO();
         conn = conexaoDao.conectaBD();
 
         try {
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, cpf);
-            pstm.setString(2, senhaEntrada);
-            rs = pstm.executeQuery();
+            pstm.setString(1, novoNome);
+            pstm.setInt(2, idClienteDAO);
+            int rowAffected = pstm.executeUpdate();
 
-            if (rs != null && rs.next()) {
-                idClienteDAO = (rs.getInt("id_cliente_pf"));
-                return idClienteDAO;
+            if (rowAffected != 0) {
+
+                return true;
             }
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro);
@@ -47,7 +45,6 @@ public class LoginClienteDAO {
                 JOptionPane.showMessageDialog(null, erro);
             }
         }
-        return null;
+        return false;
     }
-
 }

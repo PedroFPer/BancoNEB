@@ -1,22 +1,19 @@
 package ServiceRelatorio;
 
 
-import DAO.ExtratoDAO;
+import DAO.RelatorioDAO;
 import DOT.ExtratoDot;
 import java.util.ArrayList;
 
 public class ServiceRelatClien {
-
+    
+    RelatorioDAO relatorioDAO = new RelatorioDAO();
+    
     public ArrayList serviceExtratoClien(int idClienteService) {
 
-        ExtratoDAO extratoDAO = new ExtratoDAO();
-        ArrayList<ExtratoDot> listaDeExtrato = extratoDAO.listaExtratoDAO(idClienteService);
+        ArrayList<ExtratoDot> listaDeExtrato = relatorioDAO.listaExtratoDAO(idClienteService);
 
-        if (!listaDeExtrato.isEmpty()) {
-            return listaDeExtrato;
-        } else {
-            return null;
-        }
+        return listaDeExtrato;
 
     }
 }

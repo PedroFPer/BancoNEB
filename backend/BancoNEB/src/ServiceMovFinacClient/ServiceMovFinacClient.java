@@ -1,33 +1,28 @@
 package ServiceMovFinacClient;
 
-import DAO.VericCredDAO;
-import DAO.VericSaldoDAO;
+import DAO.MovFinacClienDAO;
 
 public class ServiceMovFinacClient {
 
+    MovFinacClienDAO MovFinacClienDAO = new MovFinacClienDAO();
+    
     public Double serviceVericSaldoAtual(int idClienteService) {
         Double saldoAtualService;
 
-        VericSaldoDAO vericSaldoDAO = new VericSaldoDAO();
-        saldoAtualService = vericSaldoDAO.vericSaldoAtualDAO(idClienteService);
 
-        if (saldoAtualService != null) {
-            return saldoAtualService;
-        } else {
-            return null;
-        }
+        saldoAtualService = MovFinacClienDAO.vericSaldoAtualDAO(idClienteService);
+        
+        return saldoAtualService;
+
     }
 
     public Double serviceVericCreditDisp(int idClienteService) {
         Double creditoAtualService;
 
-        VericCredDAO vericCredDAO = new VericCredDAO();
-        creditoAtualService = vericCredDAO.vericCredDispDAO(idClienteService);
+ 
+        creditoAtualService = MovFinacClienDAO.vericCredDispDAO(idClienteService);
 
-        if (creditoAtualService != null) {
-            return creditoAtualService;
-        } else {
-            return null;
-        }
+        return creditoAtualService;
+
     }
 }
