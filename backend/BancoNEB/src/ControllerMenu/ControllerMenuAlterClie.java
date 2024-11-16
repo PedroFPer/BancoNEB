@@ -15,7 +15,7 @@ public class ControllerMenuAlterClie extends ControllerModelMenu {
     @Override
     protected int quantidEscolha() {
 
-        return 3;
+        return 4;
     }
 
 }

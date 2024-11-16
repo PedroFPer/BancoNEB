@@ -146,29 +146,11 @@ public class Main {
                 case 6:
                     ControllerAlterInfor controllerAlterInfor = new ControllerAlterInfor();
                     ControllerMenuAlterClie controllerMenuAlterClie = new ControllerMenuAlterClie();
+                    
                     int escolhaAlterClie = controllerMenuAlterClie.escolherOpcao();
                     
-                    switch(escolhaAlterClie){
-                        case 1:
-                            controllerAlterInfor.ControllerAlterInfor(idCliente, escolhaAlterClie);
-                            break;
-                            
-                        case 2:
-                            //return 2
-                            break;
-                            
-                        case 3:
-                            //return 3
-                            break;
-                            
-                        case 4:
-                            //return 4
-                            break;
-                            
-                        case 0:
-                            
-                            break;
-                    }
+                    controllerAlterInfor.ControllerAlterInfor(idCliente, escolhaAlterClie);
+                    
                     break;
 
                 case 0:

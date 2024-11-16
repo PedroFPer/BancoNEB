@@ -47,4 +47,162 @@ public class AlterInforClieDAO {
         }
         return false;
     }
+
+    public boolean altEmailClieDAO(int idClienteDAO, String novoEmail) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sql = "UPDATE cliente_pf SET email = ? WHERE id_cliente_pf = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, novoEmail);
+            pstm.setInt(2, idClienteDAO);
+            int rowAffected = pstm.executeUpdate();
+
+            if (rowAffected != 0) {
+
+                return true;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return false;
+    }
+
+    public boolean altTelefoneClieDAO(int idClienteDAO, String novoTelefone) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sql = "UPDATE cliente_pf SET telefone = ? WHERE id_cliente_pf = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, novoTelefone);
+            pstm.setInt(2, idClienteDAO);
+            int rowAffected = pstm.executeUpdate();
+
+            if (rowAffected != 0) {
+                return true;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return false;
+    }
+
+    public boolean altSenhaEntradaClieDAO(int idClienteDAO, String novaSenhaEntrada) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sql = "UPDATE cliente_pf SET senha_de_entrada = ? WHERE id_cliente_pf = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, novaSenhaEntrada);
+            pstm.setInt(2, idClienteDAO);
+            int rowAffected = pstm.executeUpdate();
+
+            if (rowAffected != 0) {
+                return true;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return false;
+    }
+
+    public boolean altSenhaAutorizacaoClieDAO(int idClienteDAO, String novaSenhaAutorizacao) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sql = "UPDATE cliente_pf SET senha_de_autorizacao= ? WHERE id_cliente_pf = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, novaSenhaAutorizacao);
+            pstm.setInt(2, idClienteDAO);
+            int rowAffected = pstm.executeUpdate();
+
+            if (rowAffected != 0) {
+                return true;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return false;
+    }
+
 }
