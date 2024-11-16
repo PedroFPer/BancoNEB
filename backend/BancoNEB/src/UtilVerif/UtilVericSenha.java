@@ -1,5 +1,5 @@
 
-package UtilVerifString;
+package UtilVerif;
 
 
 public class UtilVericSenha extends UtilVericStringModel {

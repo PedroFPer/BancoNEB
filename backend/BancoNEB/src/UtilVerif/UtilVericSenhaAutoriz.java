@@ -1,4 +1,4 @@
-package UtilVerifString;
+package UtilVerif;
 
 import ServiceVericCreden.ServiceVericCreden;
 

@@ -2,6 +2,7 @@ package ServiceRelatorio;
 
 
 import DAO.RelatorioDAO;
+import DOT.BeneficiarioDot;
 import DOT.ExtratoDot;
 import java.util.ArrayList;
 
@@ -16,4 +17,10 @@ public class ServiceRelatClien {
         return listaDeExtrato;
 
     }
+    
+    public BeneficiarioDot buscarBenef(String cpfBeneficiarioService){
+        BeneficiarioDot beneficiarioDot = relatorioDAO.buscarBenef(cpfBeneficiarioService);
+        
+        return beneficiarioDot;
+    } 
 }

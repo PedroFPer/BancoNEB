@@ -1,6 +1,7 @@
 
 package DAO;
 
+import DOT.BeneficiarioDot;
 import DOT.ConexaoDAO;
 import DOT.ExtratoDot;
 import java.sql.Connection;
@@ -58,6 +59,57 @@ public class RelatorioDAO {
             }
 
             return listaExtrato;
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+
+        return null;
+    }
+    
+    public BeneficiarioDot buscarBenef(String cpfBeneficiario) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT id_cliente_pf, nome_cliente_pf FROM cliente_pf WHERE cpf  = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, cpfBeneficiario);
+            rs = pstm.executeQuery();
+
+            if(rs.next()) { 
+                int idBeneficiario = rs.getInt("id_cliente_pf");
+                String nomeBeneficiario = rs.getString("nome_cliente_pf");
+                
+                BeneficiarioDot beneficiarioDot = new BeneficiarioDot(idBeneficiario, nomeBeneficiario);
+                
+                return beneficiarioDot;
+
+            }else{
+                System.out.println("Usuario não encontrado");
+                return null;
+            }
+
+            
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro);

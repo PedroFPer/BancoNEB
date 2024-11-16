@@ -4,25 +4,22 @@ import DAO.MovFinacClienDAO;
 
 public class ServiceMovFinacClient {
 
-    MovFinacClienDAO MovFinacClienDAO = new MovFinacClienDAO();
+    MovFinacClienDAO movFinacClienDAO = new MovFinacClienDAO();
     
     public Double serviceVericSaldoAtual(int idClienteService) {
-        Double saldoAtualService;
 
-
-        saldoAtualService = MovFinacClienDAO.vericSaldoAtualDAO(idClienteService);
+        Double saldoAtualService = movFinacClienDAO.vericSaldoAtualDAO(idClienteService);
         
         return saldoAtualService;
 
     }
 
     public Double serviceVericCreditDisp(int idClienteService) {
-        Double creditoAtualService;
-
- 
-        creditoAtualService = MovFinacClienDAO.vericCredDispDAO(idClienteService);
+  
+        Double creditoAtualService = movFinacClienDAO.vericCredDispDAO(idClienteService);
 
         return creditoAtualService;
 
     }
+
 }

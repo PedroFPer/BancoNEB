@@ -1,5 +1,5 @@
 
-package UtilVerifString;
+package UtilVerif;
 
 public class UtilVericCpf extends UtilVericStringModel {
     @Override

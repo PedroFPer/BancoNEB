@@ -1,8 +1,8 @@
 package ControllerLogin;
 
 import ServiceVericCreden.ServiceVericCreden;
-import UtilVerifString.UtilVericCpf;
-import UtilVerifString.UtilVericSenha;
+import UtilVerif.UtilVericCpf;
+import UtilVerif.UtilVericSenha;
 
 import java.util.Scanner;
 

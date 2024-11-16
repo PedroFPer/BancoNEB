@@ -1,16 +1,22 @@
 package ControllerAlterInfor;
 
+import DOT.EnderecoDot;
 import ServiceAlterInfor.ServiceAlterInforClie;
-import UtilVerifString.UtilVericSenhaAutoriz;
+import UtilVerif.UtilVericSenha;
+import UtilVerif.UtilVericSenhaAutoriz;
+import UtilVerif.UtilVerifTelefone;
 import java.util.Scanner;
 
 public class ControllerAlterInfor {
 
+    UtilVerifTelefone utilVerifTelefone = new UtilVerifTelefone();
     UtilVericSenhaAutoriz utilVericSenhaAutoriz = new UtilVericSenhaAutoriz();
     ServiceAlterInforClie serviceAlterInforClie = new ServiceAlterInforClie();
+    UtilVericSenha utilVericSenha = new UtilVericSenha();
     Scanner scanner = new Scanner(System.in);
 
     public void ControllerAlterInfor(int idClienteController, int escolhaAlter) {
+
         System.out.println("Digite a sua senha de autorização da conta");
         String senhaAutor = scanner.nextLine();
 
@@ -33,9 +39,18 @@ public class ControllerAlterInfor {
                     break;
 
                 case 2:
-                    System.out.println("Digite o novo telefone:");
-                    String novoTelefone = scanner.nextLine();
+                    boolean vericTelefone;
+                    String novoTelefone;
+                    do {
+                        System.out.println("Digite o novo telefone:");
+                        novoTelefone = scanner.nextLine();
 
+                        vericTelefone = utilVerifTelefone.vericQuant(novoTelefone);
+
+                        if (!vericTelefone) {
+                            System.out.println("Formato incorreto! Por favor, lembre-se de adicionar o DDD e o 9.");
+                        }
+                    } while (!vericTelefone);
                     boolean vericAlterTelefoneClie = serviceAlterInforClie.serviceAlterTelefoneClie(idClienteController, novoTelefone);
 
                     if (vericAlterTelefoneClie) {
@@ -47,8 +62,18 @@ public class ControllerAlterInfor {
                     break;
 
                 case 3:
-                    System.out.println("Digite a nova senha de entrada:");
-                    String novaSenhaEntrada = scanner.nextLine();
+                    boolean vericSenhaEntrada;
+                    String novaSenhaEntrada;
+                    do {
+                        System.out.println("Digite a nova senha de entrada:");
+                        novaSenhaEntrada = scanner.nextLine();
+
+                        vericSenhaEntrada = utilVericSenha.vericQuant(novaSenhaEntrada);
+
+                        if (!vericSenhaEntrada) {
+                            System.out.println("Formato incorreto! A senha deve conter 8 caracteres.");
+                        }
+                    } while (!vericSenhaEntrada);
 
                     boolean vericAlterSenhaEntradaClie = serviceAlterInforClie.serviceAlterSenhaEntradaClie(idClienteController, novaSenhaEntrada);
 
@@ -61,10 +86,20 @@ public class ControllerAlterInfor {
                     break;
 
                 case 4:
-                    System.out.println("Digite a nova senha de autorização:");
-                    String novaSenhaAutorizacao = scanner.nextLine();
+                    boolean vericSenhaAutoriz;
+                    String novaSenhaAutoriz;
+                    do {
+                        System.out.println("Digite a nova senha de entrada:");
+                        novaSenhaAutoriz = scanner.nextLine();
 
-                    boolean vericAlterSenhaAutorizacaoClie = serviceAlterInforClie.serviceAlterSenhaAutorizacaoClie(idClienteController, novaSenhaAutorizacao);
+                        vericSenhaAutoriz = utilVericSenha.vericQuant(novaSenhaAutoriz);
+
+                        if (!vericSenhaAutoriz) {
+                            System.out.println("Formato incorreto! A senha deve conter 8 caracteres");
+                        }
+                    } while (!vericSenhaAutoriz);
+
+                    boolean vericAlterSenhaAutorizacaoClie = serviceAlterInforClie.serviceAlterSenhaAutorizacaoClie(idClienteController, novaSenhaAutoriz);
 
                     if (vericAlterSenhaAutorizacaoClie) {
                         System.out.println("Atualização feita com sucesso!");
@@ -89,8 +124,34 @@ public class ControllerAlterInfor {
                     break;
 
                 case 6:
-                    // Método para alterar endereço - ainda em branco
-                    System.out.println("Alteração de endereço ainda não implementada.");
+                    System.out.println("Digite o novo logradouro:");
+                    String logradouro = scanner.nextLine();
+
+                    System.out.println("Digite o novo bairro:");
+                    String bairro = scanner.nextLine();
+
+                    System.out.println("Digite o novo cidade:");
+                    String cidade = scanner.nextLine();
+
+                    System.out.println("Digite o novo estado:");
+                    String estado = scanner.nextLine();
+
+                    System.out.println("Digite o novo pais:");
+                    String pais = scanner.nextLine();
+
+                    System.out.println("Digite o novo referencia:");
+                    String referencia = scanner.nextLine();
+
+                    EnderecoDot enderecoDot = new EnderecoDot(logradouro, bairro, cidade, estado, pais, referencia);
+
+                    boolean vericAlterEnder = serviceAlterInforClie.serviceAlterEnderClie(idClienteController, enderecoDot);
+
+                    if (vericAlterEnder) {
+                        System.out.println("Atualização feita com sucesso!");
+                    } else {
+                        System.out.println("Ocorreu um problema na atualização do nome, tente novamente mais tarde.");
+                    }
+
                     break;
 
                 default:
@@ -104,4 +165,3 @@ public class ControllerAlterInfor {
         scanner.nextLine(); // Pause após o processo
     }
 }
-

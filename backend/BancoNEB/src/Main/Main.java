@@ -49,13 +49,16 @@ public class Main {
         switch (opcaoTipClie) {
             case 1:
                 ControllerLogin controllerLoginCliente = new ControllerLogin();
-
-                Integer idCliente = controllerLoginCliente.loginEntrada();
+                Integer idCliente;
+                do{
+                idCliente = controllerLoginCliente.loginEntrada();
 
                 if (idCliente != null) {
                     menuInicClie(idCliente);
+                }else{
+                    System.out.println("Credenciais incorretas, por favor tente novamente.");
                 }
-
+                }while(idCliente == null);
                 break;
             case 2:
                 System.out.println("Cadastro");
@@ -113,7 +116,7 @@ public class Main {
                     break;
 
                 case 3:
-                    //trasaçao
+                    controlMovFinacClient.transCliente(idCliente);
                     break;
 
                 case 4:
@@ -125,7 +128,7 @@ public class Main {
 
                         switch (escolhaMenuInicCredit) {
                             case 1:
-                                double veriCreditoDisponivel = controlMovFinacClient.VericCreditoAtual(idCliente);
+                                double veriCreditoDisponivel = controlMovFinacClient.vericCreditoAtual(idCliente);
 
                                 System.out.println("Crédito Disponivel: " + veriCreditoDisponivel);
                                 break;
@@ -149,8 +152,11 @@ public class Main {
                     
                     int escolhaAlterClie = controllerMenuAlterClie.escolherOpcao();
                     
+                    if(escolhaAlterClie!= 0){
                     controllerAlterInfor.ControllerAlterInfor(idCliente, escolhaAlterClie);
-                    
+                    }else{
+                        
+                    }
                     break;
 
                 case 0:

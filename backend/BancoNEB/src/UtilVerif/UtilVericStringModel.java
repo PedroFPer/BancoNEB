@@ -1,4 +1,4 @@
-package UtilVerifString;
+package UtilVerif;
 
 public abstract class UtilVericStringModel {
     public boolean vericQuant(String conjCarac){
