@@ -89,20 +89,65 @@ public class MovFinacClienDAO {
         return null;
     }
 
-    
-
-    public boolean trasancaoDAO(int idClienteDAO, double valorTransacao, String tipoPagamento, int idBeneficiario, int numParcela) {
+    public Double vericParcelaDAO(double valorCompraDAO, int numParcelaDAO, String tipoPagamentoDAO) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
+        double valorParcela;
 
-        String sql = "CALL registro_transacao(idClienteDAO,idBeneficiario,valorTransacao, tipoPagamento, numParcela)";
+        String sql = "SELECT calcular_parcelas(?,?,?)AS resultado";
 
         ConexaoDAO conexaoDao = new ConexaoDAO();
         conn = conexaoDao.conectaBD();
 
         try {
             pstm = conn.prepareStatement(sql);
+            pstm.setDouble(1, valorCompraDAO);
+            pstm.setInt(2, numParcelaDAO);
+            pstm.setString(3, tipoPagamentoDAO);
+            rs = pstm.executeQuery();
+
+            if (rs != null && rs.next()) {
+                valorParcela = (rs.getDouble("resultado"));
+                return valorParcela;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return null;
+    }
+
+    public boolean transClienDAO(int idPagadorDAO, int idBeneficiarioDAO, double valorTransaDAO, String tipoTransaDAO, int numParcelaDAO) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sql = "CALL registro_transacao(?,?,?,?,?) ";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, idPagadorDAO);
+            pstm.setInt(2, idBeneficiarioDAO);
+            pstm.setDouble(3, valorTransaDAO);
+            pstm.setString(4, tipoTransaDAO);
+            pstm.setInt(5, numParcelaDAO);
             int rowAffected = pstm.executeUpdate();
 
             if (rowAffected != 0) {
@@ -129,3 +174,4 @@ public class MovFinacClienDAO {
         return false;
     }
 }
+
