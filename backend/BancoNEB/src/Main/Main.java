@@ -11,6 +11,7 @@ import ControllerMenu.ControllerMenuCreditoInicial;
 import ControllerRelatorio.ControllerRelatClien;
 import DOT.ExtratoDot;
 import DOT.FuncionarioDot;
+import DOT.HisTrasCreDot;
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -50,15 +51,15 @@ public class Main {
             case 1:
                 ControllerLogin controllerLoginCliente = new ControllerLogin();
                 Integer idCliente;
-                do{
-                idCliente = controllerLoginCliente.loginEntrada();
+                do {
+                    idCliente = controllerLoginCliente.loginEntrada();
 
-                if (idCliente != null) {
-                    menuInicClie(idCliente);
-                }else{
-                    System.out.println("Credenciais incorretas, por favor tente novamente.");
-                }
-                }while(idCliente == null);
+                    if (idCliente != null) {
+                        menuInicClie(idCliente);
+                    } else {
+                        System.out.println("Credenciais incorretas, por favor tente novamente.");
+                    }
+                } while (idCliente == null);
                 break;
             case 2:
                 System.out.println("Cadastro");
@@ -74,6 +75,7 @@ public class Main {
     private static void menuInicClie(Integer idCliente) {
         Scanner scanner = new Scanner(System.in);
         ControlMovFinacClient controlMovFinacClient = new ControlMovFinacClient();
+        ControllerRelatClien controllerRelatClien = new ControllerRelatClien();
 
         do {
 
@@ -96,7 +98,7 @@ public class Main {
                     break;
 
                 case 2:
-                    ControllerRelatClien controllerRelatClien = new ControllerRelatClien();
+
                     ArrayList<ExtratoDot> listaDeExtrato = controllerRelatClien.controlExtratoClien(idCliente);
 
                     for (ExtratoDot extrato : listaDeExtrato) {
@@ -111,7 +113,7 @@ public class Main {
                         System.out.println("Hora da Transação: " + extrato.getHora_transacao());
                         System.out.println("-----------------------------------");
                     }
-                    
+
                     scanner.nextLine();
                     break;
 
@@ -134,6 +136,19 @@ public class Main {
                                 break;
 
                             case 2:
+                                ArrayList<HisTrasCreDot> listaHistCred = controllerRelatClien.controlHistCred(idCliente);
+
+                                for (HisTrasCreDot ht : listaHistCred) {
+
+                                    System.out.println("Valor da parcela:  " + ht.getValorParcela());
+                                    System.out.println("Mês da Parcela: " + ht.getMesParcela());
+                                    System.out.println("Ano da Parcela: " + ht.getAnoParcela());
+                                    System.out.println("parcelaAtual;: " + ht.getParcelaAtual());
+                                    System.out.println("-----------------------------------");
+                                }
+                                break;
+
+                            case 3:
 
                                 break;
 
@@ -149,13 +164,13 @@ public class Main {
                 case 6:
                     ControllerAlterInfor controllerAlterInfor = new ControllerAlterInfor();
                     ControllerMenuAlterClie controllerMenuAlterClie = new ControllerMenuAlterClie();
-                    
+
                     int escolhaAlterClie = controllerMenuAlterClie.escolherOpcao();
-                    
-                    if(escolhaAlterClie!= 0){
-                    controllerAlterInfor.ControllerAlterInfor(idCliente, escolhaAlterClie);
-                    }else{
-                        
+
+                    if (escolhaAlterClie != 0) {
+                        controllerAlterInfor.ControllerAlterInfor(idCliente, escolhaAlterClie);
+                    } else {
+
                     }
                     break;
 

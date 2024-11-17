@@ -56,7 +56,7 @@ public class ControlMovFinacClient {
             switch (escolhaTipoPagamento) {
                 case 1:
                     System.out.println("Qual valor você deseja transferi usando o crédito?");
-                    int valorTransCredito = scanner.nextInt();
+                    double valorTransCredito = scanner.nextInt();
 
                     scanner.nextLine();
 
@@ -163,6 +163,86 @@ public class ControlMovFinacClient {
                     break;
 
                 case 2:
+                    System.out.println("Qual valor você deseja transferi usando o debito:");
+                    double valorTransDebito = scanner.nextInt();
+
+                    scanner.nextLine();
+
+                    double valorSaldoAtual = controllerVericSaldoAtual(idClienteControll);
+
+                    if (valorSaldoAtual > valorTransDebito) {
+                        UtilMovFinacClie utilMovFinacClie = new UtilMovFinacClie();
+
+                        System.out.println("Digite o cpf do benefeciario da transação");
+                        String cpfBeneficiario = scanner.nextLine();
+
+                        ServiceRelatClien serviceRelatClien = new ServiceRelatClien();
+                        BeneficiarioDot beneficiarioDot = serviceRelatClien.buscarBenef(cpfBeneficiario);
+
+                        idBeneficiario = beneficiarioDot.getIdBeneficiario();
+
+                        System.out.println("Esse é o usuario correto?");
+                        System.out.println("Nome: " + beneficiarioDot.getNomeBeneficiario());
+                        System.out.println("1.Sim");
+                        System.out.println("2.Não");
+
+                        int confirmBenen = scanner.nextInt();
+
+                        scanner.nextLine();
+
+                        if (confirmBenen == 1) {
+
+                            System.out.println("Resumo da transação:");
+                            System.out.println("Befeficiario: " + beneficiarioDot.getNomeBeneficiario());
+                            System.out.println("Valor transação: " + valorTransDebito);
+                            System.out.println("Tipo de pagamento: Débito");
+ 
+
+                            System.out.println("Deseja finalizar a transação?");
+                            System.out.println("1.Sim");
+                            System.out.println("2.Não");
+                            int escolhaFinaliTran = scanner.nextInt();
+
+                            scanner.nextLine();
+
+                            switch (escolhaFinaliTran) {
+                                case 1:
+
+                                    do {
+                                        System.out.println("Por favor digite a sua senha de autorização");
+                                        String senhaAutoriza = scanner.nextLine();
+
+                                        boolean vericSenhaAutor = utilVericSenhaAutoriz.vericCred(idClienteControll, senhaAutoriza);
+
+                                        if (vericSenhaAutor) {
+                                            boolean vericTrans = serviceMovFinacClient.serviceTrasf(idClienteControll, idBeneficiario, valorTransDebito, "Débito", 0);
+
+                                            if (vericTrans) {
+                                                System.out.println("Transação feita com sucesso");
+
+                                            } else {
+                                                System.out.println("Ocorreu uma erro na transação, por favor tente novamente em instantes");
+                                            }
+                                            break;
+                                        }
+
+                                    } while (true);
+
+                                case 2:
+                                    break;
+
+                                default:
+                                    System.out.println("Entrada incorreta, por favor tente novamente");
+
+                            }
+
+                        } else {
+                            System.out.println("Para");
+                        }
+
+                    } else {
+                        System.out.println("Saldo insuficiente!");
+                    }
 
                     break;
 
