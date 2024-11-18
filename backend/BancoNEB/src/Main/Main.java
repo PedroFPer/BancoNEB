@@ -2,6 +2,7 @@ package Main;
 
 import ControlMovFinacClient.ControlMovFinacClient;
 import ControllerAlterInfor.ControllerAlterInfor;
+import ControllerCadastro.ControllerCadastro;
 import ControllerLogin.ControllerLogin;
 import ControllerMenu.ControllerMenInicClient;
 import ControllerMenu.ControllerMenTelClien;
@@ -44,32 +45,38 @@ public class Main {
 
     private static void menuTipoCliente() {
         ControllerMenInicClient menuIniClie = new ControllerMenInicClient();
+        ControllerCadastro controllerCadastro = new ControllerCadastro();
+        
+        int opcaoTipClie;
+                
+        do {
+            opcaoTipClie = menuIniClie.escolherOpcao();
 
-        int opcaoTipClie = menuIniClie.escolherOpcao();
+            switch (opcaoTipClie) {
+                case 1:
+                    ControllerLogin controllerLoginCliente = new ControllerLogin();
+                    Integer idCliente;
+                    do {
+                        idCliente = controllerLoginCliente.loginEntrada();
 
-        switch (opcaoTipClie) {
-            case 1:
-                ControllerLogin controllerLoginCliente = new ControllerLogin();
-                Integer idCliente;
-                do {
-                    idCliente = controllerLoginCliente.loginEntrada();
+                        if (idCliente != null) {
+                            menuInicClie(idCliente);
+                        } else {
+                            System.out.println("Credenciais incorretas, por favor tente novamente.");
+                        }
+                    } while (idCliente == null);
+                    break;
+                case 2:
+                    controllerCadastro.controllerCadastroClie();
 
-                    if (idCliente != null) {
-                        menuInicClie(idCliente);
-                    } else {
-                        System.out.println("Credenciais incorretas, por favor tente novamente.");
-                    }
-                } while (idCliente == null);
-                break;
-            case 2:
-                System.out.println("Cadastro");
-                break;
+                    break;
 
-            case 0:
-                System.out.println("Saindo...");
-                System.exit(0);
-                break;
-        }
+                case 0:
+                    System.out.println("Saindo...");
+                    System.exit(0);
+                    break;
+            }
+        } while (opcaoTipClie == 2);
     }
 
     private static void menuInicClie(Integer idCliente) {
@@ -152,6 +159,9 @@ public class Main {
 
                                 break;
 
+                            case 4:
+
+                                break;
                             case 0:
                                 break;
                         }

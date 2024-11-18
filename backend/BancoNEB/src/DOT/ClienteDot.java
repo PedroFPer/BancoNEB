@@ -6,7 +6,7 @@ public class ClienteDot extends GeralDot {
     private double saldo;
     private String senhaAutorizacao;
 
-    public ClienteDot(String nome, String cpf, String telefone, String logradoro, String num, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia,LocalDate datanascimento,String senhaAutorizacao) {
+    public ClienteDot(String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia,LocalDate datanascimento,String senhaAutorizacao) {
         super(nome,
                 cpf,
                 telefone,

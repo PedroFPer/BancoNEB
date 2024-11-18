@@ -9,14 +9,15 @@ public class ControllerMenuCreditoInicial extends ControllerModelMenu {
             System.out.println("Crédito:");
             System.out.println("1.Visualizar Crédito Disponivel");
             System.out.println("2.Historico de compra no crédito");
-            System.out.println("3.Fatura");
+            System.out.println("3.Fatura Atual");
+            System.out.println("4.Pesquisar fatura");
             System.out.println("0-Sair");
     }
 
 
     @Override
     protected int quantidEscolha() {
-       return 3;
+       return 4;
     }
     
 }
