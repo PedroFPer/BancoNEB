@@ -1,12 +1,12 @@
-package DOT;
+package DTO;
 
 import java.time.LocalDate;
 
-public class ClienteDot extends GeralDot {
+public class ClienteDTO extends GeralDTO {
     private double saldo;
     private String senhaAutorizacao;
 
-    public ClienteDot(String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia,LocalDate datanascimento,String senhaAutorizacao) {
+    public ClienteDTO(String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia,LocalDate datanascimento,String senhaAutorizacao) {
         super(nome,
                 cpf,
                 telefone,

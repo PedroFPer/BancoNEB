@@ -1,6 +1,8 @@
 package ControlMovFinacClient;
 
-import DOT.BeneficiarioDot;
+
+import DOT.BeneficiarioDTO;
+import DTO.PagamentPendDOT;
 import ServiceMovFinacClient.ServiceMovFinacClient;
 import ServiceRelatorio.ServiceRelatClien;
 import UtilVerif.UtilMovFinacClie;
@@ -94,12 +96,12 @@ public class ControlMovFinacClient {
                         String cpfBeneficiario = scanner.nextLine();
 
                         ServiceRelatClien serviceRelatClien = new ServiceRelatClien();
-                        BeneficiarioDot beneficiarioDot = serviceRelatClien.buscarBenef(cpfBeneficiario);
+                        BeneficiarioDTO beneficiarioDTO = serviceRelatClien.buscarBenef(cpfBeneficiario);
 
-                        idBeneficiario = beneficiarioDot.getIdBeneficiario();
+                        idBeneficiario = beneficiarioDTO.getIdBeneficiario();
 
                         System.out.println("Esse é o usuario correto?");
-                        System.out.println("Nome: " + beneficiarioDot.getNomeBeneficiario());
+                        System.out.println("Nome: " + beneficiarioDTO.getNomeBeneficiario());
                         System.out.println("1.Sim");
                         System.out.println("2.Não");
 
@@ -110,7 +112,7 @@ public class ControlMovFinacClient {
                         if (confirmBenen == 1) {
 
                             System.out.println("Resumo da transação:");
-                            System.out.println("Befeficiario: " + beneficiarioDot.getNomeBeneficiario());
+                            System.out.println("Befeficiario: " + beneficiarioDTO.getNomeBeneficiario());
                             System.out.println("Valor transação: " + valorTransCredito);
                             System.out.println("Tipo de pagamento: Crédito");
                             System.out.println("Número de parcelas:" + numParcela + "\n\n");
@@ -177,12 +179,12 @@ public class ControlMovFinacClient {
                         String cpfBeneficiario = scanner.nextLine();
 
                         ServiceRelatClien serviceRelatClien = new ServiceRelatClien();
-                        BeneficiarioDot beneficiarioDot = serviceRelatClien.buscarBenef(cpfBeneficiario);
+                        BeneficiarioDTO beneficiarioDTO = serviceRelatClien.buscarBenef(cpfBeneficiario);
 
-                        idBeneficiario = beneficiarioDot.getIdBeneficiario();
+                        idBeneficiario = beneficiarioDTO.getIdBeneficiario();
 
                         System.out.println("Esse é o usuario correto?");
-                        System.out.println("Nome: " + beneficiarioDot.getNomeBeneficiario());
+                        System.out.println("Nome: " + beneficiarioDTO.getNomeBeneficiario());
                         System.out.println("1.Sim");
                         System.out.println("2.Não");
 
@@ -193,7 +195,7 @@ public class ControlMovFinacClient {
                         if (confirmBenen == 1) {
 
                             System.out.println("Resumo da transação:");
-                            System.out.println("Befeficiario: " + beneficiarioDot.getNomeBeneficiario());
+                            System.out.println("Befeficiario: " + beneficiarioDTO.getNomeBeneficiario());
                             System.out.println("Valor transação: " + valorTransDebito);
                             System.out.println("Tipo de pagamento: Débito");
  
@@ -255,5 +257,12 @@ public class ControlMovFinacClient {
             }
             break;
         } while (escolhaTipoPagamento != 0);
+    }
+    
+    public boolean controllePag(PagamentPendDOT pagamentPendDOT){
+        boolean vericPagaCred = serviceMovFinacClient.servicePagamParc(pagamentPendDOT);
+        
+        return vericPagaCred;
+        
     }
 }

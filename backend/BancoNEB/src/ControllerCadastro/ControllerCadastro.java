@@ -1,6 +1,7 @@
 package ControllerCadastro;
 
-import DOT.ClienteDot;
+
+import DTO.ClienteDTO;
 import ServiceCadastro.ServiceCadastro;
 import UtilVerif.UtilVericCpf;
 import UtilVerif.UtilVericSenha;
@@ -128,9 +129,9 @@ public class ControllerCadastro {
         System.out.println("Informe a referência:");
         String referencia = scanner.nextLine();
 
-        ClienteDot clienteDot = new ClienteDot(nomeCliente, cpf, telefone, logradouro, bairro, cidade, estado, pais, email, senhaEntrada, referencia, dataNascimento, senhaAutorizacao);
+        ClienteDTO clienteDTO = new ClienteDTO(nomeCliente, cpf, telefone, logradouro, bairro, cidade, estado, pais, email, senhaEntrada, referencia, dataNascimento, senhaAutorizacao);
 
-        serviceCadastro.serviceCadastroCliente(clienteDot);
+        serviceCadastro.serviceCadastroCliente(clienteDTO);
 
     }
 

@@ -1,10 +1,10 @@
 
-package DOT;
+package DTO;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class ExtratoDot {
+public class ExtratoDTO {
     private int idCliente;
     private String nomePagador;
     private double valorTrasancao;
@@ -15,7 +15,7 @@ public class ExtratoDot {
     private LocalDate data_transacao;
     private LocalTime hora_transacao;
 
-    public ExtratoDot(int idCliente, String nomePagador, double valorTrasancao, String tipoPagamento, int numParcelaAtual, int numParcelaTotal, String nomeBeneficiario, LocalDate data_transacao, LocalTime hora_transacao) {
+    public ExtratoDTO(int idCliente, String nomePagador, double valorTrasancao, String tipoPagamento, int numParcelaAtual, int numParcelaTotal, String nomeBeneficiario, LocalDate data_transacao, LocalTime hora_transacao) {
         this.idCliente = idCliente;
         this.nomePagador = nomePagador;
         this.valorTrasancao = valorTrasancao;

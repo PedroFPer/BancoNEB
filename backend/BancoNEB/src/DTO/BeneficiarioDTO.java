@@ -1,11 +1,11 @@
 
 package DOT;
 
-public class BeneficiarioDot {
+public class BeneficiarioDTO {
     private int idBeneficiario;
     private String nomeBeneficiario;
 
-    public BeneficiarioDot(int idBeneficiario, String nomeBeneficiario) {
+    public BeneficiarioDTO(int idBeneficiario, String nomeBeneficiario) {
         this.idBeneficiario = idBeneficiario;
         this.nomeBeneficiario = nomeBeneficiario;
     }

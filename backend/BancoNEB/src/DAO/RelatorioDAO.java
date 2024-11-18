@@ -1,9 +1,12 @@
 package DAO;
 
-import DOT.BeneficiarioDot;
+
+import DOT.BeneficiarioDTO;
 import DOT.ConexaoDAO;
-import DOT.ExtratoDot;
-import DOT.HisTrasCreDot;
+import DTO.ConsultaPagamenPendDTO;
+import DTO.ConsultaParcPendAtualDTO;
+import DTO.ExtratoDTO;
+import DTO.HisTrasCreDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +21,7 @@ public class RelatorioDAO {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        ArrayList<ExtratoDot> listaExtrato = new ArrayList<>();
+        ArrayList<ExtratoDTO> listaExtrato = new ArrayList<>();
 
         String sql = "SELECT * FROM extrato_comum WHERE id_pagador = ?";
 
@@ -41,7 +44,7 @@ public class RelatorioDAO {
                 LocalDate data_transacao = rs.getObject("data_transacao", LocalDate.class);
                 LocalTime hora_transacao = rs.getObject("hora_transacao", LocalTime.class);
 
-                ExtratoDot extratoDot = new ExtratoDot(idCliente,
+                ExtratoDTO extratoDot = new ExtratoDTO(idCliente,
                         nomePagador,
                         valorTrasancao,
                         tipoPagamento,
@@ -81,7 +84,7 @@ public class RelatorioDAO {
         return null;
     }
 
-    public BeneficiarioDot buscarBenef(String cpfBeneficiario) {
+    public BeneficiarioDTO buscarBenef(String cpfBeneficiario) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -100,9 +103,9 @@ public class RelatorioDAO {
                 int idBeneficiario = rs.getInt("id_cliente_pf");
                 String nomeBeneficiario = rs.getString("nome_cliente_pf");
 
-                BeneficiarioDot beneficiarioDot = new BeneficiarioDot(idBeneficiario, nomeBeneficiario);
+                BeneficiarioDTO beneficiarioDTO = new BeneficiarioDTO(idBeneficiario, nomeBeneficiario);
 
-                return beneficiarioDot;
+                return beneficiarioDTO;
 
             } else {
                 System.out.println("Usuario não encontrado");
@@ -130,11 +133,11 @@ public class RelatorioDAO {
         return null;
     }
 
-    public ArrayList histTrasCredDAO(int idClienteDAO, int mesParcela, int anoParcela) {
+    public ArrayList histTrasCredDAO(ConsultaPagamenPendDTO consultaPagamenPendDTO) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        ArrayList<HisTrasCreDot> listaHistCred = new ArrayList<>();
+        ArrayList<HisTrasCreDTO> listaHistCred = new ArrayList<>();
 
         String sql = "SELECT *FROM lista_compra_crédito WHERE id_cliente_pf = ? AND mes_parcela =? AND ano_parcela = ? ;";
 
@@ -143,9 +146,9 @@ public class RelatorioDAO {
 
         try {
             pstm = conn.prepareStatement(sql);
-            pstm.setInt(1, idClienteDAO);
-            pstm.setInt(2, mesParcela);
-            pstm.setInt(3, anoParcela);
+            pstm.setInt(1,consultaPagamenPendDTO.getIdClienteDao());
+            pstm.setInt(2, consultaPagamenPendDTO.getMes());
+            pstm.setInt(3, consultaPagamenPendDTO.getAno());
             rs = pstm.executeQuery();
 
             while (rs.next()) {
@@ -157,14 +160,14 @@ public class RelatorioDAO {
                 String tipoPagamento = rs.getString("tipo_de_pagamento");
                 int parcelaAtual = rs.getInt("parcela_atual");
                 String nomeBeneficiario = rs.getString("nome_beneficiario");
-                        
-                HisTrasCreDot hisTrasCreDot = new HisTrasCreDot(idClien,valorParcela,mesParc,anoParc,tipoPagamento,parcelaAtual,nomeBeneficiario);        
 
-                listaHistCred.add(hisTrasCreDot);
+                HisTrasCreDTO hisTrasCreDTO = new HisTrasCreDTO(idClien, valorParcela, mesParc, anoParc, tipoPagamento, parcelaAtual, nomeBeneficiario);
+
+                listaHistCred.add(hisTrasCreDTO);
             }
 
             if (listaHistCred.isEmpty()) {
-                System.out.println("Nenhum dado encontrado para o id_pagador: " + idClienteDAO);
+                System.out.println("Nenhum dado encontrado");
             }
 
             return listaHistCred;
@@ -190,4 +193,67 @@ public class RelatorioDAO {
         return null;
     }
 
+    public ConsultaParcPendAtualDTO consultaParcDAO(ConsultaPagamenPendDTO consultaPagamenPendDTO) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        LocalDate dataAtual = LocalDate.now();
+
+        int mesAtual = dataAtual.getMonthValue();
+        int anoAtual = dataAtual.getYear();
+        
+
+        String sql = "SELECT*FROM pagamento_pendente_pf WHERE id_cliente_pf_pagamento = ? AND mes_parcela = ? AND ano_parcela = ? AND tipo_de_pagamento =?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1,consultaPagamenPendDTO.getIdClienteDao());
+            pstm.setInt(2,consultaPagamenPendDTO.getMes() );
+            pstm.setInt(3, consultaPagamenPendDTO.getAno());
+            pstm.setString(4,consultaPagamenPendDTO.getTipo_de_pagamento() );
+            rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                double valorTotal = rs.getDouble("valor_total_mes");
+                String status = rs.getString("status_pagamento");
+                String tipoFinanc = rs.getString("tipo_de_pagamento");
+                int mes = rs.getInt("mes_parcela");
+                int ano = rs.getInt("ano_parcela");
+                int idPagam = rs.getInt("id_pagamento_pendente_pf");
+                
+                ConsultaParcPendAtualDTO consultaParcPendAtualDTO = new ConsultaParcPendAtualDTO(valorTotal,status,tipoFinanc,mes,ano,idPagam);
+
+                return consultaParcPendAtualDTO;
+
+            } else {
+                System.out.println("Usuario não encontrado");
+                return null;
+            }
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+
+        return null;
+    }
+    
+
 }
+

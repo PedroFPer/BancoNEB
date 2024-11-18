@@ -1,8 +1,8 @@
-package DOT;
+package DTO;
 
 import java.time.LocalDate;
 
-public class GeralDot {
+public class GeralDTO {
 
     protected String nome;
     protected String cpf;
@@ -17,7 +17,7 @@ public class GeralDot {
     private String referencia;
     protected LocalDate datanascimento;
 
-    public GeralDot(String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia, LocalDate datanascimento) {
+    public GeralDTO(String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia, LocalDate datanascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;

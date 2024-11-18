@@ -1,7 +1,7 @@
 
-package DOT;
+package DTO;
 
-public class HisTrasCreDot {
+public class HisTrasCreDTO {
     private int idCliente;
     private double valorParcela;
     private int mesParcela;
@@ -10,7 +10,7 @@ public class HisTrasCreDot {
     private int parcelaAtual;
     private String nomeBeneficiario;
 
-    public HisTrasCreDot(int idCliente, double valorParcela, int mesParcela, int anoParcela, String tipoPagamento, int parcelaAtual, String nomeBeneficiario) {
+    public HisTrasCreDTO(int idCliente, double valorParcela, int mesParcela, int anoParcela, String tipoPagamento, int parcelaAtual, String nomeBeneficiario) {
         this.idCliente = idCliente;
         this.valorParcela = valorParcela;
         this.mesParcela = mesParcela;

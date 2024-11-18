@@ -1,9 +1,12 @@
 package ServiceRelatorio;
 
 import DAO.RelatorioDAO;
-import DOT.BeneficiarioDot;
-import DOT.ExtratoDot;
-import DOT.HisTrasCreDot;
+import DOT.BeneficiarioDTO;
+import DTO.ConsultaPagamenPendDTO;
+import DTO.ConsultaParcPendAtualDTO;
+import DTO.ExtratoDTO;
+import DTO.HisTrasCreDTO;
+
 import java.util.ArrayList;
 
 public class ServiceRelatClien {
@@ -12,23 +15,32 @@ public class ServiceRelatClien {
 
     public ArrayList serviceExtratoClien(int idClienteService) {
 
-        ArrayList<ExtratoDot> listaDeExtrato = relatorioDAO.listaExtratoDAO(idClienteService);
+        ArrayList<ExtratoDTO> listaDeExtrato = relatorioDAO.listaExtratoDAO(idClienteService);
 
         return listaDeExtrato;
 
     }
 
-    public BeneficiarioDot buscarBenef(String cpfBeneficiarioService) {
-        BeneficiarioDot beneficiarioDot = relatorioDAO.buscarBenef(cpfBeneficiarioService);
+    public BeneficiarioDTO buscarBenef(String cpfBeneficiarioService) {
+        BeneficiarioDTO beneficiarioDTO = relatorioDAO.buscarBenef(cpfBeneficiarioService);
 
-        return beneficiarioDot;
+        return beneficiarioDTO;
     }
 
-    public ArrayList serviceHisCreCli(int idClienteService, int mesParcelServ, int anoParcelServ) {
+    public ArrayList serviceHisCreCli(ConsultaPagamenPendDTO consultaPagamenPendDTO) {
 
-        ArrayList<HisTrasCreDot> listaHistCred = relatorioDAO.histTrasCredDAO(idClienteService, mesParcelServ, anoParcelServ);
+        ArrayList<HisTrasCreDTO> listaHistCred = relatorioDAO.histTrasCredDAO(consultaPagamenPendDTO);
 
         return listaHistCred;
 
     }
+
+    public ConsultaParcPendAtualDTO serviceConsultParc(ConsultaPagamenPendDTO consultaPagamenPendDTO) {
+        
+        ConsultaParcPendAtualDTO consultaParcelaPendenteDot = relatorioDAO.consultaParcDAO(consultaPagamenPendDTO);
+
+        return consultaParcelaPendenteDot;
+    }
+    
+
 }

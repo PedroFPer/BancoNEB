@@ -1,7 +1,11 @@
 package ControllerRelatorio;
 
-import DOT.ExtratoDot;
-import DOT.HisTrasCreDot;
+
+
+import DTO.ConsultaPagamenPendDTO;
+import DTO.ConsultaParcPendAtualDTO;
+import DTO.ExtratoDTO;
+import DTO.HisTrasCreDTO;
 import ServiceRelatorio.ServiceRelatClien;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,7 +17,7 @@ public class ControllerRelatClien {
 
     public ArrayList controlExtratoClien(int idClienteController) {
 
-        ArrayList<ExtratoDot> listaDeExtrato = serviceRelatClien.serviceExtratoClien(idClienteController);
+        ArrayList<ExtratoDTO> listaDeExtrato = serviceRelatClien.serviceExtratoClien(idClienteController);
 
         if (!listaDeExtrato.isEmpty()) {
             return listaDeExtrato;
@@ -33,15 +37,27 @@ public class ControllerRelatClien {
         int mesParcControl = scanner.nextInt();
 
         scanner.nextLine();
+        
+        ConsultaPagamenPendDTO consultaPagamenPendDTO = new ConsultaPagamenPendDTO(idClienteController,"Crédito", mesParcControl, anoParcControl);
 
-        ArrayList<HisTrasCreDot> listaHistCred = serviceRelatClien.serviceHisCreCli(idClienteController, mesParcControl, anoParcControl);
+        ArrayList<HisTrasCreDTO> listaHistCred = serviceRelatClien.serviceHisCreCli(consultaPagamenPendDTO);
 
         if (!listaHistCred.isEmpty()) {
             return listaHistCred;
         } else {
             return null;
         }
-  
+
+    }
+
+    public ConsultaParcPendAtualDTO controlConsulParcCred(int idCliente, int mes, int ano) {
+        String tipoPagamentoControll = "Crédito";
+        
+        ConsultaPagamenPendDTO consultaPagamenPend = new ConsultaPagamenPendDTO(idCliente,tipoPagamentoControll,mes,ano );
+        
+        ConsultaParcPendAtualDTO consultaParcPendAtualDTO = serviceRelatClien.serviceConsultParc(consultaPagamenPend);
+
+        return consultaParcPendAtualDTO;
     }
 
 }

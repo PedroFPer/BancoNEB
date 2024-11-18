@@ -1,8 +1,9 @@
 package DAO;
 
-import DOT.ClienteDot;
+
 import DOT.ConexaoDAO;
-import DOT.FuncionarioDot;
+import DTO.ClienteDTO;
+import DTO.FuncionarioDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class CadastroDAO {
 
-    public boolean cadastroClienteDAO(ClienteDot clienteDot) {
+    public boolean cadastroClienteDAO(ClienteDTO clienteDTO) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -23,19 +24,19 @@ public class CadastroDAO {
 
         try {
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, clienteDot.getNome());
-            pstm.setDate(2, java.sql.Date.valueOf(clienteDot.getDatanascimento()));
-            pstm.setString(3, clienteDot.getCpf());
-            pstm.setString(4, clienteDot.getTelefone());
-            pstm.setString(5, clienteDot.getEmail());
-            pstm.setString(6, clienteDot.getSenhaEntrada());
-            pstm.setString(7, clienteDot.getSenhaAutorizacao());
-            pstm.setString(8, clienteDot.getLogradoro());
-            pstm.setString(9, clienteDot.getBairro());
-            pstm.setString(10, clienteDot.getCidade());
-            pstm.setString(11, clienteDot.getEstado());
-            pstm.setString(12, clienteDot.getPais());
-            pstm.setString(13, clienteDot.getReferencia());
+            pstm.setString(1, clienteDTO.getNome());
+            pstm.setDate(2, java.sql.Date.valueOf(clienteDTO.getDatanascimento()));
+            pstm.setString(3, clienteDTO.getCpf());
+            pstm.setString(4, clienteDTO.getTelefone());
+            pstm.setString(5, clienteDTO.getEmail());
+            pstm.setString(6, clienteDTO.getSenhaEntrada());
+            pstm.setString(7, clienteDTO.getSenhaAutorizacao());
+            pstm.setString(8, clienteDTO.getLogradoro());
+            pstm.setString(9, clienteDTO.getBairro());
+            pstm.setString(10, clienteDTO.getCidade());
+            pstm.setString(11, clienteDTO.getEstado());
+            pstm.setString(12, clienteDTO.getPais());
+            pstm.setString(13, clienteDTO.getReferencia());
 
             int rowAffected = pstm.executeUpdate();
 
@@ -65,7 +66,7 @@ public class CadastroDAO {
         return false;
     }
 
-    public boolean cadastroFuncionarioDAO(FuncionarioDot funcionarioDot) {
+    public boolean cadastroFuncionarioDAO(FuncionarioDTO funcionarioDTO) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -77,21 +78,21 @@ public class CadastroDAO {
 
         try {
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, funcionarioDot.getNome());
-            pstm.setObject(2, funcionarioDot.getDatanascimento());
-            pstm.setString(3, funcionarioDot.getCpf());
-            pstm.setString(4, funcionarioDot.getTelefone());
-            pstm.setString(5, funcionarioDot.getEmail());
-            pstm.setString(6, funcionarioDot.getUsuario());
-            pstm.setString(7, funcionarioDot.getSenhaEntrada());
-            pstm.setString(8, funcionarioDot.getCargo());
-            pstm.setDouble(9, funcionarioDot.getSalario());
-            pstm.setString(10, funcionarioDot.getLogradoro());
-            pstm.setString(11, funcionarioDot.getBairro());
-            pstm.setString(12, funcionarioDot.getCidade());
-            pstm.setString(13, funcionarioDot.getEstado());
-            pstm.setString(14, funcionarioDot.getPais());
-            pstm.setString(15, funcionarioDot.getReferencia());
+            pstm.setString(1, funcionarioDTO.getNome());
+            pstm.setObject(2, funcionarioDTO.getDatanascimento());
+            pstm.setString(3, funcionarioDTO.getCpf());
+            pstm.setString(4, funcionarioDTO.getTelefone());
+            pstm.setString(5, funcionarioDTO.getEmail());
+            pstm.setString(6, funcionarioDTO.getUsuario());
+            pstm.setString(7, funcionarioDTO.getSenhaEntrada());
+            pstm.setString(8, funcionarioDTO.getCargo());
+            pstm.setDouble(9, funcionarioDTO.getSalario());
+            pstm.setString(10, funcionarioDTO.getLogradoro());
+            pstm.setString(11, funcionarioDTO.getBairro());
+            pstm.setString(12, funcionarioDTO.getCidade());
+            pstm.setString(13, funcionarioDTO.getEstado());
+            pstm.setString(14, funcionarioDTO.getPais());
+            pstm.setString(15, funcionarioDTO.getReferencia());
 
             int rowAffected = pstm.executeUpdate();
 

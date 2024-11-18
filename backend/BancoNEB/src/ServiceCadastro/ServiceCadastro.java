@@ -1,20 +1,21 @@
 package ServiceCadastro;
 
 import DAO.CadastroDAO;
-import DOT.ClienteDot;
-import DOT.FuncionarioDot;
+import DTO.ClienteDTO;
+import DTO.FuncionarioDTO;
+
 
 public class ServiceCadastro {
 
     CadastroDAO cadastroDAO = new CadastroDAO();
 
-    public boolean serviceCadastroCliente(ClienteDot clienteDot) {
-        boolean vericCadasClie = cadastroDAO.cadastroClienteDAO(clienteDot);
+    public boolean serviceCadastroCliente(ClienteDTO clienteDTO) {
+        boolean vericCadasClie = cadastroDAO.cadastroClienteDAO(clienteDTO);
         return vericCadasClie;
     }
     
-        public boolean serviceCadastroFuncionario(FuncionarioDot funcionarioDot) {
-        boolean vericCadasFunc = cadastroDAO.cadastroFuncionarioDAO(funcionarioDot);
+        public boolean serviceCadastroFuncionario(FuncionarioDTO funcionarioDTO) {
+        boolean vericCadasFunc = cadastroDAO.cadastroFuncionarioDAO(funcionarioDTO);
         return vericCadasFunc;
     }
 

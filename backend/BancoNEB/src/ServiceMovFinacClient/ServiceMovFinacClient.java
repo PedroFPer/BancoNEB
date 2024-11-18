@@ -1,6 +1,7 @@
 package ServiceMovFinacClient;
 
 import DAO.MovFinacClienDAO;
+import DTO.PagamentPendDOT;
 
 public class ServiceMovFinacClient {
 
@@ -31,6 +32,11 @@ public class ServiceMovFinacClient {
     public boolean serviceTrasf(int idPagadorService, int idBeneficiarioService, double valorTransaService, String tipoTransaService, int numParcelaService){
         boolean vericTrasan = movFinacClienDAO.transClienDAO(idPagadorService, idBeneficiarioService, valorTransaService, tipoTransaService, numParcelaService);
         return vericTrasan;
+    }
+    
+    public boolean servicePagamParc(PagamentPendDOT pagamentPendDOT){
+        boolean veriPagamParc = movFinacClienDAO.pagamPendeDAO(pagamentPendDOT);
+        return veriPagamParc;
     }
 
 }

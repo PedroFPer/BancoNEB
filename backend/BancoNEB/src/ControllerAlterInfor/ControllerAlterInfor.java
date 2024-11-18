@@ -1,6 +1,7 @@
 package ControllerAlterInfor;
 
-import DOT.EnderecoDot;
+
+import DOT.EnderecoDTO;
 import ServiceAlterInfor.ServiceAlterInforClie;
 import UtilVerif.UtilVericSenha;
 import UtilVerif.UtilVericSenhaAutoriz;
@@ -142,9 +143,9 @@ public class ControllerAlterInfor {
                     System.out.println("Digite o novo referencia:");
                     String referencia = scanner.nextLine();
 
-                    EnderecoDot enderecoDot = new EnderecoDot(logradouro, bairro, cidade, estado, pais, referencia);
+                    EnderecoDTO enderecoDTO = new EnderecoDTO(logradouro, bairro, cidade, estado, pais, referencia);
 
-                    boolean vericAlterEnder = serviceAlterInforClie.serviceAlterEnderClie(idClienteController, enderecoDot);
+                    boolean vericAlterEnder = serviceAlterInforClie.serviceAlterEnderClie(idClienteController, enderecoDTO);
 
                     if (vericAlterEnder) {
                         System.out.println("Atualização feita com sucesso!");

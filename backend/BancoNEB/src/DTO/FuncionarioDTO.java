@@ -1,14 +1,14 @@
-package DOT;
+package DTO;
 
 import java.time.LocalDate;
 
-public class FuncionarioDot extends GeralDot{  
+public class FuncionarioDTO extends GeralDTO{  
     private String cargo;
     private String usuario;
     private LocalDate dataContratacao;
     private double salario;
 
-    public FuncionarioDot(String cargo, String usuario, LocalDate dataContratacao, double salario, String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia, LocalDate datanascimento) {
+    public FuncionarioDTO(String cargo, String usuario, LocalDate dataContratacao, double salario, String nome, String cpf, String telefone, String logradoro, String bairro, String cidade, String estado, String pais, String email, String senhaEntrada, String referencia, LocalDate datanascimento) {
         super(nome, cpf, telefone, logradoro, bairro, cidade, estado, pais, email, senhaEntrada, referencia, datanascimento);
         this.cargo = cargo;
         this.usuario = usuario;

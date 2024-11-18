@@ -1,7 +1,7 @@
 package DAO;
 
 import DOT.ConexaoDAO;
-import DOT.EnderecoDot;
+import DOT.EnderecoDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -206,7 +206,7 @@ public class AlterInforClieDAO {
         return false;
     }
     
-    public boolean altEnderAutorizacaoClieDAO(int idClienteDAO,EnderecoDot enderecoDot) {
+    public boolean altEnderAutorizacaoClieDAO(int idClienteDAO,EnderecoDTO enderecoDTO) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -218,12 +218,12 @@ public class AlterInforClieDAO {
 
         try {
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1,enderecoDot.getLogradouro() );
-            pstm.setString(2, enderecoDot.getBairro());
-            pstm.setString(3, enderecoDot.getCidade());
-            pstm.setString(4, enderecoDot.getEstado());
-            pstm.setString(5, enderecoDot.getPais());
-            pstm.setString(6, enderecoDot.getReferencia());
+            pstm.setString(1,enderecoDTO.getLogradouro() );
+            pstm.setString(2, enderecoDTO.getBairro());
+            pstm.setString(3, enderecoDTO.getCidade());
+            pstm.setString(4, enderecoDTO.getEstado());
+            pstm.setString(5, enderecoDTO.getPais());
+            pstm.setString(6, enderecoDTO.getReferencia());
             pstm.setInt(7, idClienteDAO);
             int rowAffected = pstm.executeUpdate();
 

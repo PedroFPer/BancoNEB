@@ -1,7 +1,7 @@
 package ServiceAlterInfor;
 
 import DAO.AlterInforClieDAO;
-import DOT.EnderecoDot;
+import DOT.EnderecoDTO;
 
 public class ServiceAlterInforClie {
 
@@ -37,8 +37,8 @@ public class ServiceAlterInforClie {
         return vericAlterSenhaAutorizacao;
     }
 
-    public boolean serviceAlterEnderClie(int idClienteService, EnderecoDot enderecoDot) {
-        boolean vericAlterEnder = alterInforClieDAO.altEnderAutorizacaoClieDAO(idClienteService, enderecoDot);
+    public boolean serviceAlterEnderClie(int idClienteService, EnderecoDTO enderecoDTO) {
+        boolean vericAlterEnder = alterInforClieDAO.altEnderAutorizacaoClieDAO(idClienteService, enderecoDTO);
 
         return vericAlterEnder;
     }

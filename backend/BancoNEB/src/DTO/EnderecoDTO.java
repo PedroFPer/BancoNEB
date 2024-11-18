@@ -1,6 +1,6 @@
 package DOT;
 
-public class EnderecoDot {
+public class EnderecoDTO {
 
     private String logradouro ;
     private String bairro ;
@@ -9,7 +9,7 @@ public class EnderecoDot {
     private String pais ;
     private String referencia ;
 
-    public EnderecoDot(String logradouro, String bairro, String cidade, String estado, String pais, String referencia) {
+    public EnderecoDTO(String logradouro, String bairro, String cidade, String estado, String pais, String referencia) {
         this.logradouro = logradouro;
         this.bairro = bairro;
         this.cidade = cidade;
