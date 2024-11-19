@@ -7,6 +7,7 @@ import DTO.EmprestimoAbertDTO;
 import DTO.ExtratoDTO;
 import DTO.HisTrasCreDTO;
 import DTO.HistEmprDTO;
+import DTO.ValorDispoEmpresDTO;
 import ServiceRelatorio.ServiceRelatClien;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -95,5 +96,11 @@ public class ControllerRelatClien {
 
         return listaParcPendEmpr;
 
+    }
+    
+    public ValorDispoEmpresDTO controllValorDispEmprDAO(int idCliente){
+        ValorDispoEmpresDTO valorDispoEmpresDTO = serviceRelatClien.serviceValorDispEmprDAO(idCliente);
+        
+        return valorDispoEmpresDTO;
     }
 }

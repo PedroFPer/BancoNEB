@@ -9,6 +9,7 @@ import DTO.EmprestimoAbertDTO;
 import DTO.ExtratoDTO;
 import DTO.HisTrasCreDTO;
 import DTO.HistEmprDTO;
+import DTO.ValorDispoEmpresDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -286,7 +287,6 @@ public class RelatorioDAO {
                 return emprestimoAbertDTO;
 
             } else {
-                System.out.println("Emprestimo não encontrado");
                 return null;
             }
 
@@ -421,6 +421,50 @@ public class RelatorioDAO {
             }
         }
 
+        return null;
+    }
+    
+    public ValorDispoEmpresDTO valorDispEmprDAO(int idClienteDAO){
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        
+
+        String sql = "SELECT valor_total_disponivel, id_emprestimo_pf FROM emprestimo_pf WHERE id_cliente_emprestimo_pf = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, idClienteDAO);
+            rs = pstm.executeQuery();
+
+            if (rs != null && rs.next()) {
+                int idEmpre = (rs.getInt("id_emprestimo_pf"));
+                double valorDispoEmpr = (rs.getDouble("valor_total_disponivel"));
+                
+                ValorDispoEmpresDTO valorDispoEmpresDTO = new ValorDispoEmpresDTO(idEmpre,valorDispoEmpr);
+                
+                return valorDispoEmpresDTO;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
         return null;
     }
 

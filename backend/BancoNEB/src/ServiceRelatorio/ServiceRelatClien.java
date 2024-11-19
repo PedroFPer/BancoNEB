@@ -9,6 +9,7 @@ import DTO.EmprestimoAbertDTO;
 import DTO.ExtratoDTO;
 import DTO.HisTrasCreDTO;
 import DTO.HistEmprDTO;
+import DTO.ValorDispoEmpresDTO;
 
 import java.util.ArrayList;
 
@@ -58,12 +59,18 @@ public class ServiceRelatClien {
         return listaHistEmpr;
 
     }
-    
-        public ArrayList serviceParcPendEmpre(int idClienteService) {
+
+    public ArrayList serviceParcPendEmpre(int idClienteService) {
 
         ArrayList<ConsuParcPendEmprDTO> listaParcPendEmpr = relatorioDAO.parcPendEmpreDAO(idClienteService);
 
         return listaParcPendEmpr;
 
+    }
+    
+    public ValorDispoEmpresDTO serviceValorDispEmprDAO(int idCliente){
+        ValorDispoEmpresDTO valorDispoEmpresDTO = relatorioDAO.valorDispEmprDAO(idCliente);
+        
+        return valorDispoEmpresDTO;
     }
 }

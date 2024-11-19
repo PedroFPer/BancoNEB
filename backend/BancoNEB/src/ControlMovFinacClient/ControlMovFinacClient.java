@@ -2,6 +2,7 @@ package ControlMovFinacClient;
 
 
 import DOT.BeneficiarioDTO;
+import DTO.NegocEmpresDTO;
 import DTO.PagamentPendDOT;
 import ServiceMovFinacClient.ServiceMovFinacClient;
 import ServiceRelatorio.ServiceRelatClien;
@@ -71,7 +72,7 @@ public class ControlMovFinacClient {
                                 System.out.println("Em quantas vezes você gostaria de parcelar?");
 
                                 for (int i = 1; i <= 6; i++) {
-                                    System.out.println("Iteração do for: " + i);
+                                    
                                     System.out.println(i + " parcela(s) de R$: "
                                             + utilMovFinacClie.utilVericParcel(valorTransCredito, i, "Crédito"));
                                 }
@@ -264,5 +265,10 @@ public class ControlMovFinacClient {
         
         return vericPagaCred;
         
+    }
+    
+      public boolean controllNegoEmpr(NegocEmpresDTO negocEmpresDTO){
+        boolean veriNegocEmpr = serviceMovFinacClient.serviceNegoEmpr(negocEmpresDTO);
+        return veriNegocEmpr;
     }
 }

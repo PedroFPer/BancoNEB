@@ -17,10 +17,14 @@ import DTO.EmprestimoAbertDTO;
 import DTO.ExtratoDTO;
 import DTO.HisTrasCreDTO;
 import DTO.HistEmprDTO;
+import DTO.NegocEmpresDTO;
 import DTO.PagamentPendDOT;
+import DTO.ValorDispoEmpresDTO;
+import UtilVerif.UtilMovFinacClie;
 import UtilVerif.UtilVericSenhaAutoriz;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 import java.util.Scanner;
 
@@ -91,6 +95,7 @@ public class Main {
         ControlMovFinacClient controlMovFinacClient = new ControlMovFinacClient();
         ControllerRelatClien controllerRelatClien = new ControllerRelatClien();
         UtilVericSenhaAutoriz utilVericSenhaAutoriz = new UtilVericSenhaAutoriz();
+        UtilMovFinacClie utilMovFinacClie = new UtilMovFinacClie();
 
         boolean vericSenhaAutor;
 
@@ -150,30 +155,27 @@ public class Main {
                         switch (escolhaMenuInicCredit) {
                             case 1:
                                 double veriCreditoDisponivel = controlMovFinacClient.vericCreditoAtual(idCliente);
-
-                                System.out.println("Crédito Disponivel: " + veriCreditoDisponivel);
+                                System.out.println("Crédito Disponível: " + veriCreditoDisponivel);
                                 break;
 
                             case 2:
                                 ArrayList<HisTrasCreDTO> listaHistCred = controllerRelatClien.controlHistCred(idCliente);
-
                                 for (HisTrasCreDTO ht : listaHistCred) {
-
-                                    System.out.println("Valor da parcela:  " + ht.getValorParcela());
+                                    System.out.println("Valor da parcela: " + ht.getValorParcela());
                                     System.out.println("Mês da Parcela: " + ht.getMesParcela());
                                     System.out.println("Ano da Parcela: " + ht.getAnoParcela());
-                                    System.out.println("parcelaAtual;: " + ht.getParcelaAtual());
+                                    System.out.println("Parcela Atual: " + ht.getParcelaAtual());
                                     System.out.println("-----------------------------------");
                                 }
                                 break;
 
                             case 3:
                                 LocalDate dataAtu = LocalDate.now();
-
                                 int ano = dataAtual.getYear();
                                 int mes = dataAtual.getMonthValue();
 
-                                ConsultaParcPendAtualDTO consultaParcelaPendCred = controllerRelatClien.controlConsulParcCred(idCliente, mes, ano);
+                                ConsultaParcPendAtualDTO consultaParcelaPendCred
+                                        = controllerRelatClien.controlConsulParcCred(idCliente, mes, ano);
 
                                 do {
                                     System.out.println("Fatura Atual:");
@@ -185,78 +187,72 @@ public class Main {
                                     System.out.println("-----------------------------");
 
                                     if (consultaParcelaPendCred.getValorTotal() != 0) {
+                                        System.out.println("1. Pagar fatura");
+                                        System.out.println("0. Sair");
 
-                                        System.out.println("1.Pagar fatura:");
-                                        System.out.println("0.Sair");
                                         escolhaPagaCred = scanner.nextInt();
-
                                         scanner.nextLine();
 
                                         if (escolhaPagaCred == 1) {
-                                            Double saldoAtualPag = controlMovFinacClient.controllerVericSaldoAtual(idCliente);
+                                            double saldoAtualPag = controlMovFinacClient.controllerVericSaldoAtual(idCliente);
+                                            System.out.println("Saldo atual: " + saldoAtualPag);
 
-                                            System.out.println("Saldo atual = " + saldoAtualPag);
                                             System.out.println("Quanto da fatura você deseja pagar?");
                                             double pagaPend = scanner.nextDouble();
-
                                             scanner.nextLine();
 
-                                            if (pagaPend < saldoAtualPag) {
+                                            if (pagaPend <= saldoAtualPag) {
                                                 do {
-                                                    System.out.println("Digite a sua senha de autoriazação");
+                                                    System.out.println("Digite a sua senha de autorização:");
                                                     String senhaAutor = scanner.nextLine();
-
                                                     vericSenhaAutor = utilVericSenhaAutoriz.vericCred(idCliente, senhaAutor);
 
                                                     if (vericSenhaAutor) {
-                                                        PagamentPendDOT pagamentPendDOT = new PagamentPendDOT(idCliente, pagaPend, consultaParcelaPendCred.getIdPagamento(), "Crédito");
+                                                        PagamentPendDOT pagamentPendDOT
+                                                                = new PagamentPendDOT(idCliente, pagaPend,
+                                                                        consultaParcelaPendCred.getIdPagamento(), "Crédito");
                                                         controlMovFinacClient.controllePag(pagamentPendDOT);
-
+                                                        System.out.println("Pagamento efetuado com sucesso!");
+                                                        break;
                                                     } else {
-                                                        System.out.println("Senha incorreta, por favor tente novamente");
+                                                        System.out.println("Senha incorreta, tente novamente.");
                                                     }
                                                 } while (!vericSenhaAutor);
-
                                             } else {
                                                 System.out.println("Saldo insuficiente!");
                                             }
-
                                         }
-                                        break;
-                                    } else {
-                                        break;
                                     }
                                 } while (escolhaPagaCred != 0);
-
                                 break;
 
                             case 4:
-
-                                System.out.println("Digite o mês da sua fatura");
+                                System.out.println("Digite o mês da sua fatura:");
                                 int mesFatura = scanner.nextInt();
-
                                 scanner.nextLine();
 
-                                System.out.println("Digite o ano da sua fatura");
+                                System.out.println("Digite o ano da sua fatura:");
                                 int anoFatura = scanner.nextInt();
-
                                 scanner.nextLine();
 
-                                ConsultaParcPendAtualDTO consultaParcPendAtualDTO = controllerRelatClien.controlConsulParcCred(idCliente, mesFatura, anoFatura);
+                                ConsultaParcPendAtualDTO consultaParcPendAtualDTO
+                                        = controllerRelatClien.controlConsulParcCred(idCliente, mesFatura, anoFatura);
 
-                                System.out.println("Fatura Atual do mês " + mesFatura + " "
-                                        + ""
-                                        + ":");
+                                System.out.println("Fatura do mês " + mesFatura + " do ano " + anoFatura + ":");
                                 System.out.println("Valor Total: " + consultaParcPendAtualDTO.getValorTotal());
                                 System.out.println("Status Pagamento: " + consultaParcPendAtualDTO.getStatus());
                                 System.out.println("Tipo de Pagamento: " + consultaParcPendAtualDTO.getTipoFinanc());
                                 System.out.println("Mês da Parcela: " + consultaParcPendAtualDTO.getMes());
                                 System.out.println("Ano da Parcela: " + consultaParcPendAtualDTO.getAno());
                                 System.out.println("-----------------------------");
+                                break;
 
-                                break;
                             case 0:
+                                System.out.println("Saindo do menu...");
                                 break;
+
+                            default:
+                                System.out.println("Opção inválida! Tente novamente.");
                         }
                     } while (escolhaMenuInicCredit != 0);
 
@@ -293,10 +289,7 @@ public class Main {
                                     System.out.println("Mês da Parcela: " + consultaParcelaPendEmpr.getMes());
                                     System.out.println("Ano da Parcela: " + consultaParcelaPendEmpr.getAno());
                                     System.out.println("-----------------------------");
-                                    
-                                    
-                                    
-                                    
+
                                     if (consultaParcelaPendEmpr.getValorTotal() != 0) {
 
                                         System.out.println("1.Pagar fatura:");
@@ -318,7 +311,7 @@ public class Main {
                                                 do {
                                                     System.out.println("Digite a sua senha de autoriazação");
                                                     String senhaAutor = scanner.nextLine();
-                                                    
+
                                                     System.out.println("Teste " + consultaParcelaPendEmpr.getIdPagamento());
 
                                                     vericSenhaAutor = utilVericSenhaAutoriz.vericCred(idCliente, senhaAutor);
@@ -349,14 +342,14 @@ public class Main {
                                 ArrayList<ConsuParcPendEmprDTO> listaParcPendEmpr = controllerRelatClien.controlParcPendEmpre(idCliente);
 
                                 if (!listaParcPendEmpr.isEmpty()) {
-                                    for(ConsuParcPendEmprDTO cppe: listaParcPendEmpr){
-                                    System.out.println("Valor Total do Empréstimo: " + cppe.getValorTotalEmpr() );
-                                    System.out.println("Valor da Parcela Mensal: " + cppe.getValorParcMens() );
-                                    System.out.println("Mês da Parcela: " + cppe.getMesParcela() );
-                                    System.out.println("Ano da Parcela: " + cppe.getAnoParcela());
-                                    System.out.println("Status do Pagamento: " + cppe.getStatusPagam());
-                                    System.out.println("Número de Parcelas: " + cppe.getNumParce());
-                                    System.out.println("-----------------------------\n\n");
+                                    for (ConsuParcPendEmprDTO cppe : listaParcPendEmpr) {
+                                        System.out.println("Valor Total do Empréstimo: " + cppe.getValorTotalEmpr());
+                                        System.out.println("Valor da Parcela Mensal: " + cppe.getValorParcMens());
+                                        System.out.println("Mês da Parcela: " + cppe.getMesParcela());
+                                        System.out.println("Ano da Parcela: " + cppe.getAnoParcela());
+                                        System.out.println("Status do Pagamento: " + cppe.getStatusPagam());
+                                        System.out.println("Número de Parcelas: " + cppe.getNumParce());
+                                        System.out.println("-----------------------------\n\n");
                                     }
                                 } else {
                                     System.out.println("Nenhum parcela encontrada");
@@ -380,11 +373,115 @@ public class Main {
                                 break;
 
                             default:
-                          
+
                         }
-                    }else{
-                        //Adiconar o valor disponivel para o emprestimo e fazer a negociação
+                    } else {
+                        ValorDispoEmpresDTO valorDispoEmpresDTO = controllerRelatClien.controllValorDispEmprDAO(idCliente);
+                        double valorDispoEmpr = valorDispoEmpresDTO.getValotDispEmpr();
+                        int idEmprestimo = valorDispoEmpresDTO.getIdEmprest();
+                        double valorEmpres;
+                        int escolhaNegocEmpres;
+                        int numParcelaEmpre;
+
+                        do {
+                            System.out.println("Valor disponível de empréstimo:");
+                            System.out.println("Valor Total: " + valorDispoEmpr);
+                            System.out.println("-----------------------------\n\n");
+
+                            System.out.println("Você deseja fazer um empréstimo?");
+                            System.out.println("1. Sim");
+                            System.out.println("0. Não");
+
+                            escolhaNegocEmpres = scanner.nextInt();
+                            scanner.nextLine();
+
+                            switch (escolhaNegocEmpres) {
+                                case 1:
+                                    do {
+                                        try {
+                                            System.out.println("Qual valor você deseja?");
+                                            valorEmpres = scanner.nextDouble();
+                                            scanner.nextLine();
+                                            break;
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Entrada inválida. Por favor, insira um valor válido.");
+                                            scanner.nextLine();
+                                        }
+                                    } while (true);
+
+                                    if (valorDispoEmpr >= valorEmpres) {
+                                        do {
+                                            try {
+                                                System.out.println("Em quantas vezes você gostaria de parcelar?");
+                                                for (int i = 1; i <= 6; i++) {
+                                                    System.out.println(i + " parcela(s) de R$: "
+                                                            + utilMovFinacClie.utilVericParcel(valorEmpres, i, "Empréstimo"));
+                                                }
+
+                                                numParcelaEmpre = scanner.nextInt();
+                                                scanner.nextLine();
+
+                                                if (numParcelaEmpre > 0 && numParcelaEmpre <= 6) {
+                                                    break;
+                                                } else {
+                                                    System.out.println("Número de parcelas inválido. Escolha entre 1 e 6.");
+                                                }
+                                            } catch (InputMismatchException e) {
+                                                System.out.println("Formato errado, por favor tente novamente.");
+                                                scanner.nextLine();
+                                            }
+                                        } while (true);
+
+                                        System.out.println("Resumo da negociação do empréstimo:");
+                                        System.out.println("Valor transação: " + valorEmpres);
+                                        System.out.println("Número de parcelas: " + numParcelaEmpre + "\n");
+
+                                        System.out.println("Deseja finalizar a transação?");
+                                        System.out.println("1. Sim");
+                                        System.out.println("2. Não");
+
+                                        int escolhaFinaliTran = scanner.nextInt();
+                                        scanner.nextLine();
+
+                                        if (escolhaFinaliTran == 1) {
+                                            do {
+                                                System.out.println("Digite sua senha de autorização:");
+                                                String senhaAutoriza = scanner.nextLine();
+
+                                                if (utilVericSenhaAutoriz.vericCred(idCliente, senhaAutoriza)) {
+                                                    NegocEmpresDTO negocEmpresDTO = new NegocEmpresDTO(idEmprestimo, idCliente, valorEmpres, numParcelaEmpre);
+                                                    if (controlMovFinacClient.controllNegoEmpr(negocEmpresDTO)) {
+                                                        System.out.println("Negociação concluída com sucesso.");
+                                                    } else {
+                                                        System.out.println("Erro na negociação, tente novamente.");
+                                                    }
+                                                    break;
+                                                } else {
+                                                    System.out.println("Senha incorreta.");
+                                                }
+                                            } while (true);
+                                        } else {
+                                            System.out.println("Transação cancelada.");
+                                        }
+                                    } else {
+                                        System.out.println("Valor acima do disponível.");
+                                    }
+
+                                    break;
+
+                                case 0:
+                                    System.out.println("Saindo...");
+                                    break;
+
+                                default:
+                                    System.out.println("Opção inválida.");
+                                    break;
+                            }
+                            break;
+                        } while (escolhaNegocEmpres != 0);
+
                     }
+
                     break;
 
                 case 6:
@@ -395,8 +492,6 @@ public class Main {
 
                     if (escolhaAlterClie != 0) {
                         controllerAlterInfor.ControllerAlterInfor(idCliente, escolhaAlterClie);
-                    } else {
-
                     }
                     break;
 
@@ -404,8 +499,8 @@ public class Main {
                     System.out.println("Até mais!");
                     System.exit(0);
                     break;
+
             }
         } while (true);
-
     }
 }

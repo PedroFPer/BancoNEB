@@ -1,6 +1,7 @@
 package ServiceMovFinacClient;
 
 import DAO.MovFinacClienDAO;
+import DTO.NegocEmpresDTO;
 import DTO.PagamentPendDOT;
 
 public class ServiceMovFinacClient {
@@ -38,5 +39,12 @@ public class ServiceMovFinacClient {
         boolean veriPagamParc = movFinacClienDAO.pagamPendeDAO(pagamentPendDOT);
         return veriPagamParc;
     }
+    
+    public boolean serviceNegoEmpr(NegocEmpresDTO negocEmpresDTO){
+        boolean veriNegocEmpr = movFinacClienDAO.negocEmpresDAO(negocEmpresDTO);
+        return veriNegocEmpr;
+    }
+    
+    
 
 }
