@@ -1,11 +1,12 @@
 package ControllerRelatorio;
 
-
-
+import DTO.ConsuParcPendEmprDTO;
 import DTO.ConsultaPagamenPendDTO;
 import DTO.ConsultaParcPendAtualDTO;
+import DTO.EmprestimoAbertDTO;
 import DTO.ExtratoDTO;
 import DTO.HisTrasCreDTO;
+import DTO.HistEmprDTO;
 import ServiceRelatorio.ServiceRelatClien;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -37,8 +38,8 @@ public class ControllerRelatClien {
         int mesParcControl = scanner.nextInt();
 
         scanner.nextLine();
-        
-        ConsultaPagamenPendDTO consultaPagamenPendDTO = new ConsultaPagamenPendDTO(idClienteController,"Crédito", mesParcControl, anoParcControl);
+
+        ConsultaPagamenPendDTO consultaPagamenPendDTO = new ConsultaPagamenPendDTO(idClienteController, "Crédito", mesParcControl, anoParcControl);
 
         ArrayList<HisTrasCreDTO> listaHistCred = serviceRelatClien.serviceHisCreCli(consultaPagamenPendDTO);
 
@@ -52,12 +53,47 @@ public class ControllerRelatClien {
 
     public ConsultaParcPendAtualDTO controlConsulParcCred(int idCliente, int mes, int ano) {
         String tipoPagamentoControll = "Crédito";
-        
-        ConsultaPagamenPendDTO consultaPagamenPend = new ConsultaPagamenPendDTO(idCliente,tipoPagamentoControll,mes,ano );
-        
+
+        ConsultaPagamenPendDTO consultaPagamenPend = new ConsultaPagamenPendDTO(idCliente, tipoPagamentoControll, mes, ano);
+
         ConsultaParcPendAtualDTO consultaParcPendAtualDTO = serviceRelatClien.serviceConsultParc(consultaPagamenPend);
 
         return consultaParcPendAtualDTO;
     }
 
+    public ConsultaParcPendAtualDTO controlConsulParcEmpr(int idCliente, int mes, int ano) {
+        String tipoPagamentoControll = "Empréstimo";
+
+        ConsultaPagamenPendDTO consultaPagamenPend = new ConsultaPagamenPendDTO(idCliente, tipoPagamentoControll, mes, ano);
+
+        ConsultaParcPendAtualDTO consultaParcPendAtualDTO = serviceRelatClien.serviceConsultParc(consultaPagamenPend);
+
+        return consultaParcPendAtualDTO;
+    }
+
+    public EmprestimoAbertDTO controlVericEmprAber(int idClienteControl) {
+        EmprestimoAbertDTO emprestimoAbertDTO = serviceRelatClien.serviceVericEmprAber(idClienteControl);
+
+        return emprestimoAbertDTO;
+    }
+
+    public ArrayList controlHistorEmpre(int idClienteController) {
+
+        ArrayList<HistEmprDTO> listaHistEmpr = serviceRelatClien.serviceHistorEmpre(idClienteController);
+
+        if (!listaHistEmpr.isEmpty()) {
+            return listaHistEmpr;
+        } else {
+            return null;
+        }
+
+    }
+
+    public ArrayList controlParcPendEmpre(int idClienteController) {
+
+        ArrayList<ConsuParcPendEmprDTO> listaParcPendEmpr = serviceRelatClien.serviceParcPendEmpre(idClienteController);
+
+        return listaParcPendEmpr;
+
+    }
 }

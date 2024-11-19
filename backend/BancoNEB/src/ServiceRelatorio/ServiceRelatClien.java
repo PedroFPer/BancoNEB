@@ -2,10 +2,13 @@ package ServiceRelatorio;
 
 import DAO.RelatorioDAO;
 import DOT.BeneficiarioDTO;
+import DTO.ConsuParcPendEmprDTO;
 import DTO.ConsultaPagamenPendDTO;
 import DTO.ConsultaParcPendAtualDTO;
+import DTO.EmprestimoAbertDTO;
 import DTO.ExtratoDTO;
 import DTO.HisTrasCreDTO;
+import DTO.HistEmprDTO;
 
 import java.util.ArrayList;
 
@@ -36,11 +39,31 @@ public class ServiceRelatClien {
     }
 
     public ConsultaParcPendAtualDTO serviceConsultParc(ConsultaPagamenPendDTO consultaPagamenPendDTO) {
-        
+
         ConsultaParcPendAtualDTO consultaParcelaPendenteDot = relatorioDAO.consultaParcDAO(consultaPagamenPendDTO);
 
         return consultaParcelaPendenteDot;
     }
-    
 
+    public EmprestimoAbertDTO serviceVericEmprAber(int idClienteService) {
+        EmprestimoAbertDTO emprestimoAbertDTO = relatorioDAO.vericEmprestAberDAO(idClienteService);
+
+        return emprestimoAbertDTO;
+    }
+
+    public ArrayList serviceHistorEmpre(int idClienteService) {
+
+        ArrayList<HistEmprDTO> listaHistEmpr = relatorioDAO.historEmpreDAO(idClienteService);
+
+        return listaHistEmpr;
+
+    }
+    
+        public ArrayList serviceParcPendEmpre(int idClienteService) {
+
+        ArrayList<ConsuParcPendEmprDTO> listaParcPendEmpr = relatorioDAO.parcPendEmpreDAO(idClienteService);
+
+        return listaParcPendEmpr;
+
+    }
 }

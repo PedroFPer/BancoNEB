@@ -1,6 +1,7 @@
 package DAO;
 
 import DOT.ConexaoDAO;
+import DTO.NegocEmpresDTO;
 import DTO.PagamentPendDOT;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -174,8 +175,8 @@ public class MovFinacClienDAO {
         }
         return false;
     }
-    
-    public boolean pagamPendeDAO(PagamentPendDOT pagamentPendDOT){
+
+    public boolean pagamPendeDAO(PagamentPendDOT pagamentPendDOT) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -187,11 +188,10 @@ public class MovFinacClienDAO {
 
         try {
             pstm = conn.prepareStatement(sql);
-            pstm.setInt(1,pagamentPendDOT.getIdClienteDAO());
-            pstm.setDouble(2,pagamentPendDOT.getValorPago());
-            pstm.setInt(3,pagamentPendDOT.getIdPagamento());
-            pstm.setString(4,pagamentPendDOT.getTipoPagamento());
-
+            pstm.setInt(1, pagamentPendDOT.getIdClienteDAO());
+            pstm.setDouble(2, pagamentPendDOT.getValorPago());
+            pstm.setInt(3, pagamentPendDOT.getIdPagamento());
+            pstm.setString(4, pagamentPendDOT.getTipoPagamento());
 
             int rowAffected = pstm.executeUpdate();
 
@@ -220,6 +220,47 @@ public class MovFinacClienDAO {
         }
         return false;
     }
+
+    public boolean negocEmpresDAO(NegocEmpresDTO negocEmpresDTO) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sql = "CALL negociacao_emprestimo(?,?,?,?) ";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, negocEmpresDTO.getIdEmpres());
+            pstm.setInt(2, negocEmpresDTO.getIdClien());
+            pstm.setDouble(3, negocEmpresDTO.getValorTotalEmpre());
+            pstm.setInt(4, negocEmpresDTO.getQuantParc());
+            
+            int rowAffected = pstm.executeUpdate();
+
+            if (rowAffected != 0) {
+
+                return true;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return false;
+    }
 }
-
-
