@@ -109,7 +109,6 @@ public class RelatorioDAO {
                 return beneficiarioDTO;
 
             } else {
-                System.out.println("Usuario não encontrado");
                 return null;
             }
 
@@ -203,7 +202,7 @@ public class RelatorioDAO {
         int mesAtual = dataAtual.getMonthValue();
         int anoAtual = dataAtual.getYear();
 
-        String sql = "SELECT*FROM consult_parcel_pend WHERE id_cliente_pf_pagamento = ? AND mes_parcela = ? AND ano_parcela = ? AND tipo_de_pagamento =?";
+        String sql = "SELECT*FROM pagamento_pendente_pf WHERE id_cliente_pf_pagamento = ? AND mes_parcela = ? AND ano_parcela = ? AND tipo_de_pagamento =?";
 
         ConexaoDAO conexaoDao = new ConexaoDAO();
         conn = conexaoDao.conectaBD();
@@ -224,14 +223,12 @@ public class RelatorioDAO {
                 int ano = rs.getInt("ano_parcela");
                 int idPagam = rs.getInt("id_pagamento_pendente_pf");
 
-                System.out.println("Teste:" + idPagam);
 
                 ConsultaParcPendAtualDTO consultaParcPendAtualDTO = new ConsultaParcPendAtualDTO(valorTotal, status, tipoFinanc, mes, ano, idPagam);
 
                 return consultaParcPendAtualDTO;
 
             } else {
-                System.out.println("Usuario não encontrado");
                 return null;
             }
 

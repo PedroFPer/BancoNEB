@@ -15,28 +15,31 @@ public class ControlMovFinacClient {
 
     UtilVericSenhaAutoriz utilVericSenhaAutoriz = new UtilVericSenhaAutoriz();
     ServiceMovFinacClient serviceMovFinacClient = new ServiceMovFinacClient();
+    ServiceRelatClien serviceRelatClien = new ServiceRelatClien();
+
     Scanner scanner = new Scanner(System.in);
-
-
 
     public void transCliente(int idClienteControll) {
         ControllerRelatClien controllerRelatClien = new ControllerRelatClien();
-        
+
         int escolhaTipoPagamento;
         int numParcela;
-        int idBeneficiario;
-        
+        int idBeneficiario = 0;
+        boolean vericBeneficiario;
 
         do {
             System.out.println("A transação vai ser no crédito ou no debito?");
             System.out.println("1.Crédito:");
             System.out.println("2.Débito:");
+            System.out.println("0.Voltar o Menu");
             escolhaTipoPagamento = scanner.nextInt();
 
             scanner.nextLine();
 
             switch (escolhaTipoPagamento) {
                 case 1:
+                    String cpfBeneficCred;
+
                     System.out.println("Qual valor você deseja transferi usando o crédito?");
                     double valorTransCredito = scanner.nextInt();
 
@@ -44,14 +47,14 @@ public class ControlMovFinacClient {
 
                     double valorCreditoAtual = controllerRelatClien.controlVericCreditoAtual(idClienteControll);
 
-                    if (valorCreditoAtual > valorTransCredito) {
+                    if (valorCreditoAtual > valorTransCredito && valorTransCredito > 2) {
                         UtilRela utilMovFinacClie = new UtilRela();
                         do {
                             try {
                                 System.out.println("Em quantas vezes você gostaria de parcelar?");
 
                                 for (int i = 1; i <= 6; i++) {
-                                    
+
                                     System.out.println(i + " parcela(s) de R$: "
                                             + utilMovFinacClie.utilVericParcel(valorTransCredito, i, "Crédito"));
                                 }
@@ -72,11 +75,23 @@ public class ControlMovFinacClient {
 
                         } while (true);
 
-                        System.out.println("Digite o cpf do benefeciario da transação");
-                        String cpfBeneficiario = scanner.nextLine();
+                        do {
+
+                            System.out.println("Digite o cpf do benefeciario da transação");
+                            cpfBeneficCred = scanner.nextLine();
+
+                            vericBeneficiario = serviceRelatClien.serviceVericCpfExis(cpfBeneficCred);
+
+                            if (!vericBeneficiario) {
+                                System.out.println("Usuario não encontrado, por favor tente novamente");
+                            } else {
+                                break;
+                            }
+
+                        } while (true);
 
                         ServiceRelatClien serviceRelatClien = new ServiceRelatClien();
-                        BeneficiarioDTO beneficiarioDTO = serviceRelatClien.buscarBenef(cpfBeneficiario);
+                        BeneficiarioDTO beneficiarioDTO = serviceRelatClien.buscarBenef(cpfBeneficCred);
 
                         idBeneficiario = beneficiarioDTO.getIdBeneficiario();
 
@@ -135,31 +150,42 @@ public class ControlMovFinacClient {
 
                             }
 
-                        } else {
-                            System.out.println("Para");
                         }
 
                     } else {
-                        System.out.println("Saldo insuficiente!");
+                        System.out.println("Valor invalido!");
                     }
                     break;
 
                 case 2:
                     System.out.println("Qual valor você deseja transferi usando o debito:");
                     double valorTransDebito = scanner.nextInt();
+                    String cpfBenefiDebit;
 
                     scanner.nextLine();
 
-                    double valorSaldoAtual = controllerRelatClien.controlVericCreditoAtual(idClienteControll);
+                    double valorSaldoAtual = controllerRelatClien.controllerVericSaldoAtual(idClienteControll);
 
-                    if (valorSaldoAtual > valorTransDebito) {
+                    if (valorSaldoAtual > valorTransDebito && valorTransDebito > 2) {
                         UtilRela utilMovFinacClie = new UtilRela();
 
-                        System.out.println("Digite o cpf do benefeciario da transação");
-                        String cpfBeneficiario = scanner.nextLine();
+                        do {
+
+                            System.out.println("Digite o cpf do benefeciario da transação");
+                            cpfBenefiDebit = scanner.nextLine();
+
+                            vericBeneficiario = serviceRelatClien.serviceVericCpfExis(cpfBenefiDebit);
+
+                            if (!vericBeneficiario) {
+                                System.out.println("Usuario não encontrado, por favor tente novamente");
+                            } else {
+                                break;
+                            }
+
+                        } while (true);
 
                         ServiceRelatClien serviceRelatClien = new ServiceRelatClien();
-                        BeneficiarioDTO beneficiarioDTO = serviceRelatClien.buscarBenef(cpfBeneficiario);
+                        BeneficiarioDTO beneficiarioDTO = serviceRelatClien.buscarBenef(cpfBenefiDebit);
 
                         idBeneficiario = beneficiarioDTO.getIdBeneficiario();
 
@@ -178,7 +204,6 @@ public class ControlMovFinacClient {
                             System.out.println("Befeficiario: " + beneficiarioDTO.getNomeBeneficiario());
                             System.out.println("Valor transação: " + valorTransDebito);
                             System.out.println("Tipo de pagamento: Débito");
- 
 
                             System.out.println("Deseja finalizar a transação?");
                             System.out.println("1.Sim");
@@ -223,7 +248,7 @@ public class ControlMovFinacClient {
                         }
 
                     } else {
-                        System.out.println("Saldo insuficiente!");
+                        System.out.println("Valor invalido!");
                     }
 
                     break;
@@ -232,21 +257,21 @@ public class ControlMovFinacClient {
 
                     break;
                 default:
-
+                    System.out.println("Escolha incorreta!");
                     break;
             }
             break;
         } while (escolhaTipoPagamento != 0);
     }
-    
-    public boolean controlPag(PagamentPendDOT pagamentPendDOT){
+
+    public boolean controlPag(PagamentPendDOT pagamentPendDOT) {
         boolean vericPagaCred = serviceMovFinacClient.servicePagamParc(pagamentPendDOT);
-        
+
         return vericPagaCred;
-        
+
     }
-    
-      public boolean controlNegoEmpr(NegocEmpresDTO negocEmpresDTO){
+
+    public boolean controlNegoEmpr(NegocEmpresDTO negocEmpresDTO) {
         boolean veriNegocEmpr = serviceMovFinacClient.serviceNegoEmpr(negocEmpresDTO);
         return veriNegocEmpr;
     }
