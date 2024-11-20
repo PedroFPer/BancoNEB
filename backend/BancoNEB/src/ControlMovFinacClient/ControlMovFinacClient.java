@@ -1,12 +1,12 @@
 package ControlMovFinacClient;
 
-
+import ControllerRelatorio.ControllerRelatClien;
 import DOT.BeneficiarioDTO;
 import DTO.NegocEmpresDTO;
 import DTO.PagamentPendDOT;
 import ServiceMovFinacClient.ServiceMovFinacClient;
 import ServiceRelatorio.ServiceRelatClien;
-import UtilVerif.UtilMovFinacClie;
+import UtilVerif.UtilRela;
 import UtilVerif.UtilVericSenhaAutoriz;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -17,36 +17,15 @@ public class ControlMovFinacClient {
     ServiceMovFinacClient serviceMovFinacClient = new ServiceMovFinacClient();
     Scanner scanner = new Scanner(System.in);
 
-    public Double controllerVericSaldoAtual(int idClienteController) {
-        Double saldoAtualController;
 
-        saldoAtualController = serviceMovFinacClient.serviceVericSaldoAtual(idClienteController);
-
-        if (saldoAtualController != null) {
-            return saldoAtualController;
-        } else {
-            return null;
-        }
-
-    }
-
-    public Double vericCreditoAtual(int idClienteController) {
-        Double creditoAtualController;
-
-        creditoAtualController = serviceMovFinacClient.serviceVericCreditDisp(idClienteController);
-
-        if (creditoAtualController != null) {
-            return creditoAtualController;
-        } else {
-            return null;
-        }
-
-    }
 
     public void transCliente(int idClienteControll) {
+        ControllerRelatClien controllerRelatClien = new ControllerRelatClien();
+        
         int escolhaTipoPagamento;
         int numParcela;
         int idBeneficiario;
+        
 
         do {
             System.out.println("A transação vai ser no crédito ou no debito?");
@@ -63,10 +42,10 @@ public class ControlMovFinacClient {
 
                     scanner.nextLine();
 
-                    double valorCreditoAtual = vericCreditoAtual(idClienteControll);
+                    double valorCreditoAtual = controllerRelatClien.controlVericCreditoAtual(idClienteControll);
 
                     if (valorCreditoAtual > valorTransCredito) {
-                        UtilMovFinacClie utilMovFinacClie = new UtilMovFinacClie();
+                        UtilRela utilMovFinacClie = new UtilRela();
                         do {
                             try {
                                 System.out.println("Em quantas vezes você gostaria de parcelar?");
@@ -171,10 +150,10 @@ public class ControlMovFinacClient {
 
                     scanner.nextLine();
 
-                    double valorSaldoAtual = controllerVericSaldoAtual(idClienteControll);
+                    double valorSaldoAtual = controllerRelatClien.controlVericCreditoAtual(idClienteControll);
 
                     if (valorSaldoAtual > valorTransDebito) {
-                        UtilMovFinacClie utilMovFinacClie = new UtilMovFinacClie();
+                        UtilRela utilMovFinacClie = new UtilRela();
 
                         System.out.println("Digite o cpf do benefeciario da transação");
                         String cpfBeneficiario = scanner.nextLine();
@@ -260,14 +239,14 @@ public class ControlMovFinacClient {
         } while (escolhaTipoPagamento != 0);
     }
     
-    public boolean controllePag(PagamentPendDOT pagamentPendDOT){
+    public boolean controlPag(PagamentPendDOT pagamentPendDOT){
         boolean vericPagaCred = serviceMovFinacClient.servicePagamParc(pagamentPendDOT);
         
         return vericPagaCred;
         
     }
     
-      public boolean controllNegoEmpr(NegocEmpresDTO negocEmpresDTO){
+      public boolean controlNegoEmpr(NegocEmpresDTO negocEmpresDTO){
         boolean veriNegocEmpr = serviceMovFinacClient.serviceNegoEmpr(negocEmpresDTO);
         return veriNegocEmpr;
     }

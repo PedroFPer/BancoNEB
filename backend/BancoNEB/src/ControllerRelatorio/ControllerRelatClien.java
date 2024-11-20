@@ -21,11 +21,7 @@ public class ControllerRelatClien {
 
         ArrayList<ExtratoDTO> listaDeExtrato = serviceRelatClien.serviceExtratoClien(idClienteController);
 
-        if (!listaDeExtrato.isEmpty()) {
-            return listaDeExtrato;
-        } else {
-            return null;
-        }
+        return listaDeExtrato;
 
     }
 
@@ -44,11 +40,7 @@ public class ControllerRelatClien {
 
         ArrayList<HisTrasCreDTO> listaHistCred = serviceRelatClien.serviceHisCreCli(consultaPagamenPendDTO);
 
-        if (!listaHistCred.isEmpty()) {
-            return listaHistCred;
-        } else {
-            return null;
-        }
+        return listaHistCred;
 
     }
 
@@ -82,11 +74,7 @@ public class ControllerRelatClien {
 
         ArrayList<HistEmprDTO> listaHistEmpr = serviceRelatClien.serviceHistorEmpre(idClienteController);
 
-        if (!listaHistEmpr.isEmpty()) {
-            return listaHistEmpr;
-        } else {
-            return null;
-        }
+        return listaHistEmpr;
 
     }
 
@@ -97,10 +85,36 @@ public class ControllerRelatClien {
         return listaParcPendEmpr;
 
     }
-    
-    public ValorDispoEmpresDTO controllValorDispEmprDAO(int idCliente){
+
+    public ValorDispoEmpresDTO controllValorDispEmprDAO(int idCliente) {
         ValorDispoEmpresDTO valorDispoEmpresDTO = serviceRelatClien.serviceValorDispEmprDAO(idCliente);
-        
+
         return valorDispoEmpresDTO;
+    }
+
+    public Double controllerVericSaldoAtual(int idClienteController) {
+        Double saldoAtualController;
+
+        saldoAtualController = serviceRelatClien.serviceVericSaldoAtual(idClienteController);
+
+        if (saldoAtualController != null) {
+            return saldoAtualController;
+        } else {
+            return null;
+        }
+
+    }
+
+    public Double controlVericCreditoAtual(int idClienteController) {
+        Double creditoAtualController;
+
+        creditoAtualController = serviceRelatClien.serviceVericCreditDisp(idClienteController);
+
+        if (creditoAtualController != null) {
+            return creditoAtualController;
+        } else {
+            return null;
+        }
+
     }
 }

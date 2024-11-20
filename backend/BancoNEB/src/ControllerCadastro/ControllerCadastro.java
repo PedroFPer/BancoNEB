@@ -1,8 +1,8 @@
 package ControllerCadastro;
 
-
 import DTO.ClienteDTO;
 import ServiceCadastro.ServiceCadastro;
+import ServiceRelatorio.ServiceRelatClien;
 import UtilVerif.UtilVericCpf;
 import UtilVerif.UtilVericSenha;
 import UtilVerif.UtilVerifTelefone;
@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 public class ControllerCadastro {
 
+    ServiceRelatClien serviceRelatClien = new ServiceRelatClien();
     ServiceCadastro serviceCadastro = new ServiceCadastro();
     UtilVerifTelefone utilVerifTelefone = new UtilVerifTelefone();
     UtilVericCpf utilVericCpf = new UtilVericCpf();
@@ -26,7 +27,6 @@ public class ControllerCadastro {
         String telefone;
         String senhaEntrada;
         String senhaAutorizacao;
-        
 
         System.out.println("Informe o nome do cliente:");
         String nomeCliente = scanner.nextLine();
@@ -37,17 +37,17 @@ public class ControllerCadastro {
                 String dataNasc = scanner.nextLine();
 
                 dataNascimento = LocalDate.parse(dataNasc, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                
+
                 LocalDate hoje = LocalDate.now();
-                
+
                 Period periodo = Period.between(dataNascimento, hoje);
-                
-                if(periodo.getYears()>16){
+
+                if (periodo.getYears() > 16) {
                     break;
-                }else{
+                } else {
                     System.out.println("É necessario ter pelo menos 16 anos para poder criar uma conta no banco");
                 }
-                
+
             } catch (DateTimeParseException e) {
                 System.out.println("Formato errado, por favor tente novamente");
             }
@@ -60,7 +60,15 @@ public class ControllerCadastro {
             boolean vericCpf = utilVericCpf.vericQuant(cpf);
 
             if (vericCpf) {
-                break;
+                boolean controlVericCpfExis = serviceRelatClien.serviceVericCpfExis(cpf);
+
+                if (controlVericCpfExis) {
+                    System.out.println("CPF já existe no sistema!");
+
+                } else {
+                    break;
+                }
+               
             } else {
                 System.out.println("Formato errado! O Cpf deve conter 11 caracteres");
             }

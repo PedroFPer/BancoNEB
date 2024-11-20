@@ -36,35 +36,33 @@ public class RelatorioDAO {
             pstm.setInt(1, idClienteDAO);
             rs = pstm.executeQuery();
 
-            while (rs.next()) {
-                int idCliente = rs.getInt("id_pagador");
-                String nomePagador = rs.getString("nome_pagador");
-                double valorTrasancao = rs.getDouble("valor_transacao");
-                String tipoPagamento = rs.getString("tipo_pagamento");
-                int numParcelaAtual = rs.getInt("num_parcela_atual");
-                int numParcelaTotal = rs.getInt("num_parcela_total");
-                String nomeBeneficiario = rs.getString("nome_beneficiario");
-                LocalDate data_transacao = rs.getObject("data_transacao", LocalDate.class);
-                LocalTime hora_transacao = rs.getObject("hora_transacao", LocalTime.class);
 
-                ExtratoDTO extratoDot = new ExtratoDTO(idCliente,
-                        nomePagador,
-                        valorTrasancao,
-                        tipoPagamento,
-                        numParcelaAtual,
-                        numParcelaTotal,
-                        nomeBeneficiario,
-                        data_transacao,
-                        hora_transacao);
+                while (rs.next()) {
+                    int idCliente = rs.getInt("id_pagador");
+                    String nomePagador = rs.getString("nome_pagador");
+                    double valorTrasancao = rs.getDouble("valor_transacao");
+                    String tipoPagamento = rs.getString("tipo_pagamento");
+                    int numParcelaAtual = rs.getInt("num_parcela_atual");
+                    int numParcelaTotal = rs.getInt("num_parcela_total");
+                    String nomeBeneficiario = rs.getString("nome_beneficiario");
+                    LocalDate data_transacao = rs.getObject("data_transacao", LocalDate.class);
+                    LocalTime hora_transacao = rs.getObject("hora_transacao", LocalTime.class);
 
-                listaExtrato.add(extratoDot);
-            }
+                    ExtratoDTO extratoDot = new ExtratoDTO(idCliente,
+                            nomePagador,
+                            valorTrasancao,
+                            tipoPagamento,
+                            numParcelaAtual,
+                            numParcelaTotal,
+                            nomeBeneficiario,
+                            data_transacao,
+                            hora_transacao);
 
-            if (listaExtrato.isEmpty()) {
-                System.out.println("Nenhum dado encontrado para o id_pagador: " + idClienteDAO);
-            }
+                    listaExtrato.add(extratoDot);
+                }
 
-            return listaExtrato;
+                return listaExtrato;
+            
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro);
@@ -87,7 +85,7 @@ public class RelatorioDAO {
         return null;
     }
 
-    public BeneficiarioDTO buscarBenef(String cpfBeneficiario) {
+    public BeneficiarioDTO buscarBenefDAO(String cpfBeneficiario) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -163,7 +161,6 @@ public class RelatorioDAO {
                 String tipoPagamento = rs.getString("tipo_de_pagamento");
                 int parcelaAtual = rs.getInt("parcela_atual");
                 String nomeBeneficiario = rs.getString("nome_beneficiario");
-                
 
                 HisTrasCreDTO hisTrasCreDTO = new HisTrasCreDTO(idClien, valorParcela, mesParc, anoParc, tipoPagamento, parcelaAtual, nomeBeneficiario);
 
@@ -226,7 +223,7 @@ public class RelatorioDAO {
                 int mes = rs.getInt("mes_parcela");
                 int ano = rs.getInt("ano_parcela");
                 int idPagam = rs.getInt("id_pagamento_pendente_pf");
-                
+
                 System.out.println("Teste:" + idPagam);
 
                 ConsultaParcPendAtualDTO consultaParcPendAtualDTO = new ConsultaParcPendAtualDTO(valorTotal, status, tipoFinanc, mes, ano, idPagam);
@@ -392,7 +389,7 @@ public class RelatorioDAO {
                 String statusPagam = rs.getString("status_pagamento");
                 int numParce = rs.getInt("num_parcela");
 
-                ConsuParcPendEmprDTO consuParcPendEmprDTO = new ConsuParcPendEmprDTO(valorTotalEmpr,valorParcMens,mesParcela,anoParcela,statusPagam,numParce);
+                ConsuParcPendEmprDTO consuParcPendEmprDTO = new ConsuParcPendEmprDTO(valorTotalEmpr, valorParcMens, mesParcela, anoParcela, statusPagam, numParce);
 
                 listaParcPendEmpr.add(consuParcPendEmprDTO);
             }
@@ -423,12 +420,11 @@ public class RelatorioDAO {
 
         return null;
     }
-    
-    public ValorDispoEmpresDTO valorDispEmprDAO(int idClienteDAO){
+
+    public ValorDispoEmpresDTO valorDispEmprDAO(int idClienteDAO) {
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
-        
 
         String sql = "SELECT valor_total_disponivel, id_emprestimo_pf FROM emprestimo_pf WHERE id_cliente_emprestimo_pf = ?";
 
@@ -443,9 +439,9 @@ public class RelatorioDAO {
             if (rs != null && rs.next()) {
                 int idEmpre = (rs.getInt("id_emprestimo_pf"));
                 double valorDispoEmpr = (rs.getDouble("valor_total_disponivel"));
-                
-                ValorDispoEmpresDTO valorDispoEmpresDTO = new ValorDispoEmpresDTO(idEmpre,valorDispoEmpr);
-                
+
+                ValorDispoEmpresDTO valorDispoEmpresDTO = new ValorDispoEmpresDTO(idEmpre, valorDispoEmpr);
+
                 return valorDispoEmpresDTO;
             }
         } catch (Exception erro) {
@@ -468,4 +464,165 @@ public class RelatorioDAO {
         return null;
     }
 
+    public Double vericCredDispDAO(int idClienteDAO) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        double creditoAtualDAO;
+
+        String sql = "SELECT valor_disponivel FROM credito_pf WHERE id_cliente_credito_pf = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, idClienteDAO);
+            rs = pstm.executeQuery();
+
+            if (rs != null && rs.next()) {
+                creditoAtualDAO = (rs.getDouble("valor_disponivel"));
+                return creditoAtualDAO;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return null;
+    }
+
+    public Double vericSaldoAtualDAO(int idClienteDAO) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        double saldoAtualDAO;
+
+        String sql = "SELECT saldo FROM cliente_pf WHERE id_cliente_pf = ?";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, idClienteDAO);
+            rs = pstm.executeQuery();
+
+            if (rs != null && rs.next()) {
+                saldoAtualDAO = (rs.getDouble("saldo"));
+                return saldoAtualDAO;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return null;
+    }
+
+    public Double vericParcelaDAO(double valorCompraDAO, int numParcelaDAO, String tipoPagamentoDAO) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        double valorParcela;
+
+        String sql = "SELECT calcular_parcelas(?,?,?)AS resultado";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setDouble(1, valorCompraDAO);
+            pstm.setInt(2, numParcelaDAO);
+            pstm.setString(3, tipoPagamentoDAO);
+            rs = pstm.executeQuery();
+
+            if (rs != null && rs.next()) {
+                valorParcela = (rs.getDouble("resultado"));
+                return valorParcela;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return null;
+    }
+
+    public boolean vericCpfExisDAO(String cpf) {
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        boolean vericCpf;
+
+        String sql = "SELECT veric_cpf_exis(?) AS resultVericCpf";
+
+        ConexaoDAO conexaoDao = new ConexaoDAO();
+        conn = conexaoDao.conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, cpf);
+            rs = pstm.executeQuery();
+
+            if (rs != null && rs.next()) {
+                vericCpf = rs.getBoolean("resultVericCpf");
+                return vericCpf;
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(null, erro);
+            }
+        }
+        return false;
+    }
 }

@@ -26,7 +26,7 @@ public class ServiceRelatClien {
     }
 
     public BeneficiarioDTO buscarBenef(String cpfBeneficiarioService) {
-        BeneficiarioDTO beneficiarioDTO = relatorioDAO.buscarBenef(cpfBeneficiarioService);
+        BeneficiarioDTO beneficiarioDTO = relatorioDAO.buscarBenefDAO(cpfBeneficiarioService);
 
         return beneficiarioDTO;
     }
@@ -72,5 +72,34 @@ public class ServiceRelatClien {
         ValorDispoEmpresDTO valorDispoEmpresDTO = relatorioDAO.valorDispEmprDAO(idCliente);
         
         return valorDispoEmpresDTO;
+    }
+    
+        
+    public Double serviceVericSaldoAtual(int idClienteService) {
+
+        Double saldoAtualService = relatorioDAO.vericSaldoAtualDAO(idClienteService);
+        
+        return saldoAtualService;
+
+    }
+
+    public Double serviceVericCreditDisp(int idClienteService) {
+  
+        Double creditoAtualService = relatorioDAO.vericCredDispDAO(idClienteService);
+
+        return creditoAtualService;
+
+    }
+    
+    public Double serviceParcValor(double valorCompraService, int numParcelaService, String tipoPagamentoService){
+         double valorParcela = relatorioDAO.vericParcelaDAO(valorCompraService, numParcelaService, tipoPagamentoService);
+         
+         return valorParcela;
+    }
+    
+    public boolean serviceVericCpfExis(String cpf){
+        boolean serviceCpfExis = relatorioDAO.vericCpfExisDAO(cpf);
+        
+        return serviceCpfExis;
     }
 }
