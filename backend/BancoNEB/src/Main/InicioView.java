@@ -22,10 +22,10 @@ public class InicioView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 500));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Bem vindo ao BancoNEB!");
 
-        ButtonAcessCont.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ButtonAcessCont.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         ButtonAcessCont.setText("Acessar Conta");
         ButtonAcessCont.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -33,7 +33,7 @@ public class InicioView extends javax.swing.JFrame {
             }
         });
 
-        ButtonCadasCli.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ButtonCadasCli.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         ButtonCadasCli.setText("Quero ser Cliente!");
         ButtonCadasCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -41,7 +41,7 @@ public class InicioView extends javax.swing.JFrame {
             }
         });
 
-        ButtonSair.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ButtonSair.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         ButtonSair.setText("Sair");
         ButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,36 +54,35 @@ public class InicioView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(284, 284, 284)
+                .addComponent(ButtonAcessCont)
+                .addContainerGap(287, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(284, 284, 284)
-                        .addComponent(ButtonCadasCli))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(331, 331, 331)
-                        .addComponent(ButtonSair)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(298, 298, 298)
-                        .addComponent(ButtonAcessCont)))
-                .addGap(0, 248, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(169, 169, 169))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(ButtonCadasCli)
+                        .addGap(258, 258, 258))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ButtonSair)
+                .addGap(336, 336, 336))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                 .addComponent(ButtonAcessCont)
-                .addGap(66, 66, 66)
+                .addGap(65, 65, 65)
                 .addComponent(ButtonCadasCli)
-                .addGap(83, 83, 83)
+                .addGap(80, 80, 80)
                 .addComponent(ButtonSair)
-                .addGap(139, 139, 139))
+                .addGap(143, 143, 143))
         );
 
         pack();
