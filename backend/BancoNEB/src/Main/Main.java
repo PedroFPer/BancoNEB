@@ -237,11 +237,22 @@ public class Main {
                                         double saldoAtualPag = controllerRelatClien.controllerVericSaldoAtual(idCliente);
                                         System.out.println("Saldo atual: " + saldoAtualPag);
 
-                                        System.out.println("Quanto da fatura você deseja pagar?");
-                                        double pagaPend = scanner.nextDouble();
-                                        scanner.nextLine();
+                                        double pagaPend = 0;
+                                        boolean entradaValida = false;
 
-                                        if (pagaPend <= saldoAtualPag && pagaPend <= valorParcelaMen) {
+                                        do {
+                                            try {
+                                                System.out.println("Quanto da fatura você deseja pagar?");
+                                                pagaPend = Double.parseDouble(scanner.nextLine());
+
+                                                entradaValida = true;
+
+                                            } catch (NumberFormatException e) {
+                                                System.out.println("Entrada inválida! Por favor, insira um número válido.");
+                                            }
+                                        } while (!entradaValida);
+
+                                        if (pagaPend <= saldoAtualPag && pagaPend <= valorParcelaMen && pagaPend > 2) {
                                             do {
                                                 System.out.println("Digite a sua senha de autorização:");
                                                 String senhaAutor = scanner.nextLine();
@@ -380,9 +391,20 @@ public class Main {
                                     if (escolhaPagaEmpre == 1) {
                                         Double saldoAtualPag = controllerRelatClien.controllerVericSaldoAtual(idCliente);
 
-                                        System.out.println("Saldo atual = " + saldoAtualPag);
-                                        System.out.println("Quanto da fatura você deseja pagar?");
-                                        double pagaPend = scanner.nextDouble();
+                                        double pagaPend = 0;
+                                        boolean entradaValida = false;
+
+                                        do {
+                                            try {
+                                                System.out.println("Saldo atual = " + saldoAtualPag);
+                                                System.out.println("Quanto da fatura você deseja pagar?");
+                                                pagaPend = scanner.nextDouble();
+                                                entradaValida = true;
+                                            } catch (Exception e) {
+                                                System.out.println("Entrada inválida! Por favor, insira um número válido.");
+                                                scanner.nextLine();
+                                            }
+                                        } while (!entradaValida);
 
                                         scanner.nextLine();
 
