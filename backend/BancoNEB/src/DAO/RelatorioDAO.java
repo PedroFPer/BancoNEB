@@ -202,11 +202,8 @@ public class RelatorioDAO {
         int mesAtual = dataAtual.getMonthValue();
         int anoAtual = dataAtual.getYear();
 
-<<<<<<< Updated upstream
         String sql = "SELECT*FROM pagamento_pendente_pf WHERE id_cliente_pf_pagamento = ? AND mes_parcela = ? AND ano_parcela = ? AND tipo_de_pagamento =?";
-=======
-        String sql = "SELECT*FROM pagamento_pendente_pf WHERE id_cliente_pf_pagamento = ? AND mes_parcela = ? AND ano_parcela = ? AND tipo_de_pagamento =? AND status_pagamento = 'Pendente'";
->>>>>>> Stashed changes
+
 
         ConexaoDAO conexaoDao = new ConexaoDAO();
         conn = conexaoDao.conectaBD();

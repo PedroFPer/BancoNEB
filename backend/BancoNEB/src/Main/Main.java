@@ -199,12 +199,13 @@ public class Main {
                     int mes = dataAtual.getMonthValue();
 
                     ConsultaParcPendAtualDTO consultaParcelaPendCred = controllerRelatClien.controlConsulParcCred(idCliente, mes, ano);
-                    String sitFaturCred = consultaParcelaPendCred.getStatus();
-                    double valorParcelaMen = consultaParcelaPendCred.getValorTotal();
 
                     if (consultaParcelaPendCred == null) {
                         System.out.println("Nenhum dado encontrado");
                     } else {
+
+                        String sitFaturCred = consultaParcelaPendCred.getStatus();
+                        double valorParcelaMen = consultaParcelaPendCred.getValorTotal();
 
                         if (sitFaturCred.equals("Pago")) {
                             System.out.println("Fatura Paga:");
@@ -339,7 +340,6 @@ public class Main {
 
                     int ano = dataA.getYear();
                     int mes = dataA.getMonthValue();
-                   
 
                     ConsultaParcPendAtualDTO consultaParcelaPendEmpr = controllerRelatClien.controlConsulParcEmpr(idCliente, mes, ano);
                     double valorParcelEmpr = consultaParcelaPendEmpr.getValorTotal();
@@ -355,7 +355,7 @@ public class Main {
                             System.out.println("Mês da Parcela: " + consultaParcelaPendEmpr.getMes());
                             System.out.println("Ano da Parcela: " + consultaParcelaPendEmpr.getAno());
                             System.out.println("-----------------------------");
-                            
+
                             break;
                         } else {
                             System.out.println("Fatura Atual:");
