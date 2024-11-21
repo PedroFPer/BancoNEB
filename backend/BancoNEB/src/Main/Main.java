@@ -428,7 +428,6 @@ public class Main {
                             System.out.println("Mês da Parcela: " + cppe.getMesParcela());
                             System.out.println("Ano da Parcela: " + cppe.getAnoParcela());
                             System.out.println("Status do Pagamento: " + cppe.getStatusPagam());
-                            System.out.println("Número de Parcelas: " + cppe.getNumParce());
                             System.out.println("-----------------------------\n\n");
                         }
 

@@ -384,9 +384,8 @@ public class RelatorioDAO {
                 int mesParcela = rs.getInt("mes_parcela");
                 int anoParcela = rs.getInt("ano_parcela");
                 String statusPagam = rs.getString("status_pagamento");
-                int numParce = rs.getInt("num_parcela");
 
-                ConsuParcPendEmprDTO consuParcPendEmprDTO = new ConsuParcPendEmprDTO(valorTotalEmpr, valorParcMens, mesParcela, anoParcela, statusPagam, numParce);
+                ConsuParcPendEmprDTO consuParcPendEmprDTO = new ConsuParcPendEmprDTO(valorTotalEmpr, valorParcMens, mesParcela, anoParcela, statusPagam);
 
                 listaParcPendEmpr.add(consuParcPendEmprDTO);
             }

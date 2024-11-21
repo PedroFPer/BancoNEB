@@ -7,15 +7,13 @@ public class ConsuParcPendEmprDTO {
     private int mesParcela;
     private int anoParcela;
     private String statusPagam;
-    private int numParce;
 
-    public ConsuParcPendEmprDTO(double valorTotalEmpr, double valorParcMens, int mesParcela, int anoParcela, String statusPagam, int numParce) {
+    public ConsuParcPendEmprDTO(double valorTotalEmpr, double valorParcMens, int mesParcela, int anoParcela, String statusPagam) {
         this.valorTotalEmpr = valorTotalEmpr;
         this.valorParcMens = valorParcMens;
         this.mesParcela = mesParcela;
         this.anoParcela = anoParcela;
         this.statusPagam = statusPagam;
-        this.numParce = numParce;
     }
 
     public double getValorTotalEmpr() {
@@ -38,9 +36,7 @@ public class ConsuParcPendEmprDTO {
         return statusPagam;
     }
 
-    public int getNumParce() {
-        return numParce;
-    }
+
     
     
 
