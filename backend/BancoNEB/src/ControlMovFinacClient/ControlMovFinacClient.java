@@ -47,7 +47,7 @@ public class ControlMovFinacClient {
 
                     double valorCreditoAtual = controllerRelatClien.controlVericCreditoAtual(idClienteControll);
 
-                    if (valorCreditoAtual > valorTransCredito && valorTransCredito > 2) {
+                    if (valorCreditoAtual >= valorTransCredito && valorTransCredito > 2) {
                         UtilRela utilMovFinacClie = new UtilRela();
                         do {
                             try {
@@ -166,7 +166,7 @@ public class ControlMovFinacClient {
 
                     double valorSaldoAtual = controllerRelatClien.controllerVericSaldoAtual(idClienteControll);
 
-                    if (valorSaldoAtual > valorTransDebito && valorTransDebito > 2) {
+                    if (valorSaldoAtual >= valorTransDebito && valorTransDebito > 2) {
                         UtilRela utilMovFinacClie = new UtilRela();
 
                         do {
